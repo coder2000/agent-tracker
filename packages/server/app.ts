@@ -1,20 +1,17 @@
 import * as express from "express";
-import { join } from "path";
 import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
-
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+import * as helmet from "helmet";
+import * as csrf from "csurf";
+import { GraphQLServer } from "./graphql";
 
 var app = express();
+const csrfProtection = csrf({ cookie: true });
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(join(__dirname, "public")));
-
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use(helmet());
+GraphQLServer.applyMiddleware({ app, cors: true });
+app.use(csrfProtection);
 
 export default app;

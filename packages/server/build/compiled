@@ -81,17 +81,1385 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = require("express");
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProviderScope; });
+var ProviderScope;
+(function (ProviderScope) {
+    ProviderScope["Application"] = "APPLICATION";
+    ProviderScope["Request"] = "REQUEST";
+    ProviderScope["Session"] = "SESSION";
+})(ProviderScope || (ProviderScope = {}));
+//# sourceMappingURL=types.js.map
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql-toolkit");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql");
+
+/***/ }),
+/* 3 */,
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModuleSessionInfo; });
+class ModuleSessionInfo {
+    constructor(_module, _session) {
+        this._module = _module;
+        this._session = _session;
+        this.injector.provide({
+            provide: ModuleSessionInfo,
+            useValue: this,
+        });
+    }
+    get module() {
+        return this._module;
+    }
+    get session() {
+        return this._session;
+    }
+    get cache() {
+        return this.module.selfCache;
+    }
+    get injector() {
+        return this.module.injector.getSessionInjector(this.session);
+    }
+    get config() {
+        return this.module.config;
+    }
+    get name() {
+        return this.module.name;
+    }
+}
+//# sourceMappingURL=module-session-info.js.map
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TypeDefNotFoundError; });
+class TypeDefNotFoundError extends Error {
+    constructor(_typeName, _dependent) {
+        super(`
+      GraphQL-Modules Error: typeDef Not Found!
+      - TypeDef '${_typeName}' not found in Module #${_dependent} scope!
+
+      Possible solutions:
+      - Check if you have this typeDef in that module's typeDefs.
+      - Check if you have the module of this typeDef imported in your dependent modules.
+    `);
+        this._typeName = _typeName;
+        this._dependent = _dependent;
+        Object.setPrototypeOf(this, TypeDefNotFoundError.prototype);
+        Error.captureStackTrace(this, TypeDefNotFoundError);
+    }
+    get typeName() {
+        return this._typeName;
+    }
+    get dependent() {
+        return this._dependent;
+    }
+}
+//# sourceMappingURL=typedef-not-found.js.map
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SchemaNotValidError; });
+class SchemaNotValidError extends Error {
+    constructor(moduleName, error) {
+        super(`
+      GraphQL-Modules Error: Schema is not valid!
+      - #Module #${moduleName} doesn't have a valid schema!
+      -- ${error}
+
+      Possible solutions:
+      - Check syntax errors in typeDefs
+      - Make sure you import correct dependencies
+    `);
+        Object.setPrototypeOf(this, SchemaNotValidError.prototype);
+        Error.captureStackTrace(this, SchemaNotValidError);
+    }
+}
+//# sourceMappingURL=schema-not-valid.js.map
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return asArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return normalizeSession; });
+const asArray = (fns) => (Array.isArray(fns) ? fns : [fns]);
+function normalizeSession(session) {
+    // tslint:disable-next-line:no-console
+    if ('session' in session) {
+        session = session['session'];
+    }
+    if ('connection' in session && 'context' in session['connection']) {
+        session = session['connection']['context']['session'];
+    }
+    return session;
+}
+//# sourceMappingURL=helpers.js.map
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/core/dist/esnext/errors/dependency-module-not-found.js
+class DependencyModuleNotFoundError extends Error {
+    constructor(_dependency, _dependent) {
+        super(`
+      GraphQL-Modules Error: Dependency Module Not Found!
+      - Module #${_dependency} couldn't be imported into #${_dependent}
+      -- Module #${_dependency} is not defined in that scope!
+
+      Possible solutions:
+      - If you're using 'forRoot' on the upper import, use 'forChild' on the children imports.
+      - If you're using 'forChild' on the parent imports, use 'forRoot' on the upper import.
+  `);
+        this._dependency = _dependency;
+        this._dependent = _dependent;
+        Object.setPrototypeOf(this, DependencyModuleNotFoundError.prototype);
+        Error.captureStackTrace(this, DependencyModuleNotFoundError);
+    }
+    get dependency() {
+        return this._dependency;
+    }
+    get dependent() {
+        return this._dependent;
+    }
+}
+//# sourceMappingURL=dependency-module-not-found.js.map
+// EXTERNAL MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/core/dist/esnext/errors/schema-not-valid.js
+var schema_not_valid = __webpack_require__(6);
+
+// EXTERNAL MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/core/dist/esnext/errors/dependency-module-undefined.js
+var dependency_module_undefined = __webpack_require__(10);
+
+// EXTERNAL MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/core/dist/esnext/errors/typedef-not-found.js
+var typedef_not_found = __webpack_require__(5);
+
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/core/dist/esnext/errors/provider-class-not-decorated.js
+class ProviderClassNotDecoratedError extends Error {
+    constructor(_moduleName, _serviceIdentifier, _className) {
+        super(`
+      GraphQL-Modules Error: Provider is not decorated!
+      - Module #${_moduleName} provides a provider with a non-decorated ${_className}.
+
+      Possible solutions:
+      - Check if Class #${_className} decorated with @Injectable()
+    `);
+        this._moduleName = _moduleName;
+        this._serviceIdentifier = _serviceIdentifier;
+        this._className = _className;
+        Object.setPrototypeOf(this, ProviderClassNotDecoratedError.prototype);
+        Error.captureStackTrace(this, ProviderClassNotDecoratedError);
+    }
+    get moduleName() {
+        return this._moduleName;
+    }
+    get serviceIdentifier() {
+        return this._serviceIdentifier;
+    }
+    get className() {
+        return this._className;
+    }
+}
+//# sourceMappingURL=provider-class-not-decorated.js.map
+// EXTERNAL MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/core/dist/esnext/errors/module-config-required.js
+var module_config_required = __webpack_require__(9);
+
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/core/dist/esnext/errors/index.js
+/* concated harmony reexport DependencyModuleNotFoundError */__webpack_require__.d(__webpack_exports__, "a", function() { return DependencyModuleNotFoundError; });
+/* concated harmony reexport SchemaNotValidError */__webpack_require__.d(__webpack_exports__, "e", function() { return schema_not_valid["a" /* SchemaNotValidError */]; });
+/* concated harmony reexport DependencyModuleUndefinedError */__webpack_require__.d(__webpack_exports__, "b", function() { return dependency_module_undefined["a" /* DependencyModuleUndefinedError */]; });
+/* concated harmony reexport TypeDefNotFoundError */__webpack_require__.d(__webpack_exports__, "f", function() { return typedef_not_found["a" /* TypeDefNotFoundError */]; });
+/* concated harmony reexport ProviderClassNotDecoratedError */__webpack_require__.d(__webpack_exports__, "d", function() { return ProviderClassNotDecoratedError; });
+/* concated harmony reexport ModuleConfigRequiredError */__webpack_require__.d(__webpack_exports__, "c", function() { return module_config_required["a" /* ModuleConfigRequiredError */]; });
+
+
+
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModuleConfigRequiredError; });
+class ModuleConfigRequiredError extends Error {
+    constructor(_moduleName) {
+        super(`
+      GraphQL-Modules Error: Module needs a configuration object!
+      - #Module #${_moduleName} isn't imported by a configuration object.
+
+      Possible solutions:
+      - You should pass a valid configuration to import this module using forRoot.
+      - If you already pass a configuration object with forRoot in somewhere in the application.
+        You must import that module with forChild in other modules.
+    `);
+        this._moduleName = _moduleName;
+        Object.setPrototypeOf(this, ModuleConfigRequiredError.prototype);
+        Error.captureStackTrace(this, ModuleConfigRequiredError);
+    }
+    get moduleName() {
+        return this._moduleName;
+    }
+}
+//# sourceMappingURL=module-config-required.js.map
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DependencyModuleUndefinedError; });
+class DependencyModuleUndefinedError extends Error {
+    constructor(_dependency) {
+        super(`
+      GraphQL-Modules Error: Dependency Module Undefined!
+      - Module #${_dependency} is trying to import an undefined module declaration
+
+      Possible solutions:
+      - Circular imports may be used; so try to import modules like below;
+        imports: () => [
+          FooModule,
+          BarModule
+        ]
+  `);
+        this._dependency = _dependency;
+        Object.setPrototypeOf(this, DependencyModuleUndefinedError.prototype);
+        Error.captureStackTrace(this, DependencyModuleUndefinedError);
+    }
+    get dependency() {
+        return this._dependency;
+    }
+}
+//# sourceMappingURL=dependency-module-undefined.js.map
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ModuleConfig; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GraphQLModule; });
+/* harmony import */ var graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var graphql_toolkit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _graphql_modules_di__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
+/* harmony import */ var _graphql_modules_di__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
+/* harmony import */ var graphql__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
+/* harmony import */ var graphql__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(graphql__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9);
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5);
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6);
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(10);
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(12);
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(deepmerge__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _module_session_info__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7);
+/* harmony import */ var apollo_server_caching__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(13);
+/* harmony import */ var apollo_server_caching__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(apollo_server_caching__WEBPACK_IMPORTED_MODULE_11__);
+
+
+
+
+
+
+
+
+/**
+ * Returns a dependency injection token for getting a module's configuration object by
+ * the module's name.
+ * You can use this later with `@Inject` in your `Provider`s.
+ *
+ * @param module
+ * @constructor
+ */
+const ModuleConfig = (module) => {
+    if (module instanceof Function) {
+        module = module();
+    }
+    if (module instanceof GraphQLModule) {
+        module = module.name;
+    }
+    return Symbol.for(`ModuleConfig.${module}`);
+};
+/**
+ * Represents a GraphQL module that has it's own types, resolvers, context and business logic.
+ * You can read more about it in the Documentation section. {@link /docs/introduction/modules}
+ *
+ * You can also specific `Config` generic to tell TypeScript what's the structure of your
+ * configuration object to use later with `forRoot`
+ */
+class GraphQLModule {
+    /**
+     * Creates a new `GraphQLModule` instance, merged it's type definitions and resolvers.
+     * @param options - module configuration
+     */
+    constructor(_options = {}, _moduleConfig) {
+        this._options = _options;
+        this._moduleConfig = _moduleConfig;
+        this._cache = {
+            injector: undefined,
+            schema: undefined,
+            typeDefs: undefined,
+            resolvers: undefined,
+            schemaDirectives: undefined,
+            contextBuilder: undefined,
+            extraSchemas: undefined,
+            directiveResolvers: undefined,
+            subscriptionHooks: undefined,
+            imports: undefined,
+            selfKeyValueCache: undefined,
+            selfLogger: undefined,
+        };
+        this._cacheAsync = {
+            schemaAsync: undefined,
+            typeDefsAsync: undefined,
+            resolversAsync: undefined,
+        };
+        this.paramsOnOperationResult$Map = new WeakMap();
+        this.opIdOnOperationCompleteResult$Map = new WeakMap();
+        this._sessionContext$Map = new WeakMap();
+    }
+    /**
+     * Creates another instance of the module using a configuration
+     * @param config - the config object
+     */
+    forRoot(config) {
+        this._moduleConfig = {
+            ...this._moduleConfig,
+            ...config,
+        };
+        // clean cache
+        this._cache = {
+            injector: undefined,
+            schema: undefined,
+            typeDefs: undefined,
+            resolvers: undefined,
+            schemaDirectives: undefined,
+            contextBuilder: undefined,
+            extraSchemas: undefined,
+            directiveResolvers: undefined,
+            subscriptionHooks: undefined,
+            imports: undefined,
+            selfKeyValueCache: undefined,
+            selfLogger: undefined,
+        };
+        return this;
+    }
+    forChild(config) {
+        if (config) {
+            return new GraphQLModule(this._options, {
+                ...this._moduleConfig,
+                ...config,
+            });
+        }
+        else {
+            return this;
+        }
+    }
+    checkConfiguration() {
+        if (this._options.configRequired && !this._moduleConfig) {
+            throw new _errors__WEBPACK_IMPORTED_MODULE_4__[/* ModuleConfigRequiredError */ "a"](this.name);
+        }
+    }
+    get name() {
+        if (!this._options.name) {
+            const getFilename = (id) => id.split('/').pop();
+            const generateName = () => {
+                const randomId = Math.floor(Math.random() * Math.floor(Number.MAX_SAFE_INTEGER)).toString();
+                if ( true && module.parent && module.parent.parent) {
+                    return getFilename(module.parent.parent.id) + '_' + randomId;
+                }
+                return randomId;
+            };
+            this._options.name = generateName();
+        }
+        return this._options.name;
+    }
+    get config() {
+        return this._moduleConfig;
+    }
+    /**
+     * Gets the application `GraphQLSchema` object.
+     * If the schema object is not built yet, it compiles
+     * the `typeDefs` and `resolvers` into `GraphQLSchema`
+     */
+    get schema() {
+        if (typeof this._cache.schema === 'undefined') {
+            this.checkConfiguration();
+            const selfImports = this.selfImports;
+            const importsSchemas = selfImports.map(module => module.schema).filter(schema => schema);
+            try {
+                const selfTypeDefs = this.selfTypeDefs;
+                const selfEncapsulatedResolvers = this.addSessionInjectorToSelfResolversContext(this.selfResolvers);
+                const selfEncapsulatedResolversComposition = this.addSessionInjectorToSelfResolversCompositionContext(this.selfResolversComposition);
+                const selfResolverValidationOptions = this.selfResolverValidationOptions;
+                const selfExtraSchemas = this.selfExtraSchemas;
+                if (importsSchemas.length || selfTypeDefs || selfExtraSchemas.length) {
+                    this._cache.schema = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeSchemas"])({
+                        schemas: [
+                            ...importsSchemas,
+                            ...selfExtraSchemas,
+                        ],
+                        typeDefs: selfTypeDefs || undefined,
+                        resolvers: selfEncapsulatedResolvers,
+                        resolversComposition: selfEncapsulatedResolversComposition,
+                        resolverValidationOptions: selfResolverValidationOptions,
+                        logger: 'clientError' in this.selfLogger ? {
+                            log: message => this.selfLogger.clientError(message),
+                        } : undefined,
+                    });
+                }
+                else {
+                    this._cache.schema = null;
+                }
+            }
+            catch (e) {
+                if (e.message === 'Must provide typeDefs') {
+                    this._cache.schema = null;
+                }
+                else if (e.message.includes(`Type "`) && e.message.includes(`" not found in document.`)) {
+                    const typeDef = e.message.replace('Type "', '').replace('" not found in document.', '');
+                    throw new _errors__WEBPACK_IMPORTED_MODULE_5__[/* TypeDefNotFoundError */ "a"](typeDef, this.name);
+                }
+                else {
+                    throw new _errors__WEBPACK_IMPORTED_MODULE_6__[/* SchemaNotValidError */ "a"](this.name, e.message);
+                }
+            }
+            if ('middleware' in this._options) {
+                const middlewareResult = this.injector.call(this._options.middleware, this);
+                Object.assign(this._cache, middlewareResult);
+            }
+        }
+        return this._cache.schema;
+    }
+    get schemaAsync() {
+        if (typeof this._cache.schema === 'undefined') {
+            if (typeof this._cacheAsync.schemaAsync === 'undefined') {
+                this._cacheAsync.schemaAsync = new Promise(async (resolve, reject) => {
+                    try {
+                        if (!this._cache.schema) {
+                            this.checkConfiguration();
+                            const selfImports = this.selfImports;
+                            const importsSchemas$Arr = selfImports.map(module => module.schemaAsync);
+                            try {
+                                const selfTypeDefsAsync$ = this.selfTypeDefsAsync;
+                                const selfEncapsulatedResolversAsync$ = this.selfResolversAsync.then(selfResolvers => this.addSessionInjectorToSelfResolversContext(selfResolvers));
+                                const [selfTypeDefs, selfEncapsulatedResolvers, selfExtraSchemas, ...importsSchemas] = await Promise.all([
+                                    selfTypeDefsAsync$,
+                                    selfEncapsulatedResolversAsync$,
+                                    Promise.resolve().then(() => this.selfExtraSchemas),
+                                    ...importsSchemas$Arr,
+                                ]);
+                                const selfEncapsulatedResolversComposition = this.addSessionInjectorToSelfResolversCompositionContext(this.selfResolversComposition);
+                                const selfLogger = this.selfLogger;
+                                const selfResolverValidationOptions = this.selfResolverValidationOptions;
+                                if (importsSchemas.length || selfTypeDefs || selfExtraSchemas.length) {
+                                    this._cache.schema = await Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeSchemasAsync"])({
+                                        schemas: [
+                                            ...importsSchemas,
+                                            ...selfExtraSchemas,
+                                        ].filter(s => s),
+                                        typeDefs: selfTypeDefs || undefined,
+                                        resolvers: selfEncapsulatedResolvers,
+                                        resolversComposition: selfEncapsulatedResolversComposition,
+                                        resolverValidationOptions: selfResolverValidationOptions,
+                                        logger: 'clientError' in selfLogger ? {
+                                            log: (message) => selfLogger.clientError(message),
+                                        } : undefined,
+                                    });
+                                }
+                                else {
+                                    this._cache.schema = null;
+                                }
+                            }
+                            catch (e) {
+                                if (e.message === 'Must provide typeDefs') {
+                                    this._cache.schema = null;
+                                }
+                                else if (e.message.includes(`Type "`) && e.message.includes(`" not found in document.`)) {
+                                    const typeDef = e.message.replace('Type "', '').replace('" not found in document.', '');
+                                    throw new _errors__WEBPACK_IMPORTED_MODULE_5__[/* TypeDefNotFoundError */ "a"](typeDef, this.name);
+                                }
+                                else {
+                                    throw new _errors__WEBPACK_IMPORTED_MODULE_6__[/* SchemaNotValidError */ "a"](this.name, e.message);
+                                }
+                            }
+                            if ('middleware' in this._options) {
+                                const middlewareResult = this.injector.call(this._options.middleware, this);
+                                Object.assign(this._cache, middlewareResult);
+                            }
+                        }
+                        resolve(this._cache.schema);
+                    }
+                    catch (e) {
+                        reject(e);
+                    }
+                });
+            }
+            return this._cacheAsync.schemaAsync;
+        }
+        return Promise.resolve(this._cache.schema);
+    }
+    /**
+     * Gets the application dependency-injection injector
+     */
+    get injector() {
+        if (typeof this._cache.injector === 'undefined') {
+            this.checkConfiguration();
+            const injector = this._cache.injector = new _graphql_modules_di__WEBPACK_IMPORTED_MODULE_1__[/* Injector */ "a"]({
+                name: this.name,
+                injectorScope: _graphql_modules_di__WEBPACK_IMPORTED_MODULE_2__[/* ProviderScope */ "a"].Application,
+                defaultProviderScope: this.selfDefaultProviderScope,
+                hooks: ['onInit', 'onRequest', 'onResponse', 'onConnect', 'onDisconnect'],
+                initialProviders: this.selfProviders,
+                children: this.selfImports.map(module => module.injector),
+            });
+            injector.onInstanceCreated = ({ instance }) => {
+                if (typeof instance !== 'number' &&
+                    typeof instance !== 'boolean' &&
+                    typeof instance !== 'string' &&
+                    'initialize' in instance &&
+                    typeof instance['initialize'] === 'function') {
+                    instance['initialize']({ cache: this.selfCache });
+                }
+            };
+            injector.callHookWithArgs({
+                hook: 'onInit',
+                args: [this],
+                instantiate: true,
+                async: false,
+            });
+        }
+        return this._cache.injector;
+    }
+    get extraSchemas() {
+        if (typeof this._cache.extraSchemas) {
+            const selfImports = this.selfImports;
+            const importsExtraSchemas = selfImports.map(module => module.extraSchemas).reduce((extraSchemas, moduleExtraSchemas) => extraSchemas.concat(moduleExtraSchemas), []);
+            const selfExtraSchemas = this.selfExtraSchemas;
+            this._cache.extraSchemas = importsExtraSchemas.concat(selfExtraSchemas);
+        }
+        return this._cache.extraSchemas;
+    }
+    /**
+     * Gets the merged GraphQL type definitions as one string
+     */
+    get typeDefs() {
+        if (typeof this._cache.typeDefs === 'undefined') {
+            let typeDefsArr = new Array();
+            const selfImports = this.selfImports;
+            for (const module of selfImports) {
+                const moduleTypeDefs = module.typeDefs;
+                if (moduleTypeDefs) {
+                    typeDefsArr.push(moduleTypeDefs);
+                }
+            }
+            const selfTypeDefs = this.selfTypeDefs;
+            if (selfTypeDefs) {
+                typeDefsArr.push(selfTypeDefs);
+            }
+            typeDefsArr = typeDefsArr.concat(this.extraSchemas);
+            if (typeDefsArr.length) {
+                this._cache.typeDefs = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeTypeDefs"])(typeDefsArr, {
+                    useSchemaDefinition: false,
+                });
+            }
+            else {
+                this._cache.typeDefs = null;
+            }
+        }
+        return this._cache.typeDefs;
+    }
+    get typeDefsAsync() {
+        if (typeof this._cache.typeDefs === 'undefined') {
+            if (typeof this._cacheAsync.typeDefsAsync) {
+                this._cacheAsync.typeDefsAsync = new Promise(async (resolve, reject) => {
+                    try {
+                        const [extraSchemas, importsTypeDefs, selfTypeDefs,] = await Promise.all([
+                            Promise.resolve().then(() => this.selfExtraSchemas),
+                            Promise.all(this.selfImports.map(module => module.typeDefsAsync)),
+                            this.selfTypeDefsAsync,
+                        ]);
+                        const typeDefs = importsTypeDefs.concat(extraSchemas).concat(selfTypeDefs);
+                        if (typeDefs.length) {
+                            this._cache.typeDefs = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeTypeDefs"])(typeDefs.filter(s => s), {
+                                useSchemaDefinition: false,
+                            });
+                        }
+                        else {
+                            this._cache.typeDefs = null;
+                        }
+                        resolve(this._cache.typeDefs);
+                    }
+                    catch (e) {
+                        reject(e);
+                    }
+                });
+            }
+            return this._cacheAsync.typeDefsAsync;
+        }
+        return Promise.resolve(this._cache.typeDefs);
+    }
+    get resolvers() {
+        if (typeof this._cache.resolvers === 'undefined') {
+            const resolversToBeComposed = new Array();
+            const selfImports = this.selfImports;
+            for (const module of selfImports) {
+                const moduleResolvers = module.resolvers;
+                resolversToBeComposed.push(moduleResolvers);
+            }
+            const resolvers = this.addSessionInjectorToSelfResolversContext(this.selfResolvers);
+            const resolversComposition = this.addSessionInjectorToSelfResolversCompositionContext(this.selfResolversComposition);
+            resolversToBeComposed.push(resolvers);
+            const composedResolvers = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["composeResolvers"])(Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeResolvers"])(resolversToBeComposed), resolversComposition);
+            this._cache.resolvers = composedResolvers;
+        }
+        return this._cache.resolvers;
+    }
+    get resolversAsync() {
+        if (typeof this._cache.resolvers === 'undefined') {
+            if (typeof this._cacheAsync.resolversAsync === 'undefined') {
+                this._cacheAsync.resolversAsync = new Promise(async (resolve, reject) => {
+                    try {
+                        const resolversToBeComposed = await Promise.all([
+                            ...this.selfImports.map(module => module.resolversAsync),
+                            this.selfResolversAsync.then(selfResolvers => this.addSessionInjectorToSelfResolversContext(selfResolvers)),
+                        ]);
+                        const resolversComposition = this.addSessionInjectorToSelfResolversCompositionContext(this.selfResolversComposition);
+                        const composedResolvers = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["composeResolvers"])(Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeResolvers"])(resolversToBeComposed), resolversComposition);
+                        this._cache.resolvers = composedResolvers;
+                        resolve(this._cache.resolvers);
+                    }
+                    catch (e) {
+                        reject(e);
+                    }
+                });
+            }
+            return this._cacheAsync.resolversAsync;
+        }
+        return Promise.resolve(this._cache.resolvers);
+    }
+    get schemaDirectives() {
+        if (typeof this._cache.schemaDirectives === 'undefined') {
+            const schemaDirectivesSet = new Array();
+            const selfImports = this.selfImports;
+            for (const module of selfImports) {
+                const moduleSchemaDirectives = module.schemaDirectives;
+                schemaDirectivesSet.push(moduleSchemaDirectives);
+            }
+            const selfSchemaDirectives = this.selfSchemaDirectives;
+            const selfDirectiveResolvers = this.selfDirectiveResolvers;
+            // tslint:disable-next-line:forin
+            for (const directiveName in selfDirectiveResolvers) {
+                selfSchemaDirectives[directiveName] = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["getSchemaDirectiveFromDirectiveResolver"])(selfDirectiveResolvers[directiveName]);
+            }
+            schemaDirectivesSet.push(selfSchemaDirectives);
+            this._cache.schemaDirectives = deepmerge__WEBPACK_IMPORTED_MODULE_8__["all"]([...schemaDirectivesSet]);
+        }
+        return this._cache.schemaDirectives;
+    }
+    get subscriptions() {
+        if (typeof this._cache.subscriptionHooks === 'undefined') {
+            const subscriptionHooks = new Array();
+            const selfImports = this.selfImports;
+            for (const module of selfImports) {
+                const moduleSubscriptionHooks = module.subscriptions;
+                if (moduleSubscriptionHooks) {
+                    subscriptionHooks.push(moduleSubscriptionHooks);
+                }
+            }
+            this._cache.subscriptionHooks = {
+                onConnect: (connectionParams, websocket, connectionContext) => {
+                    if (!this._sessionContext$Map.has(websocket)) {
+                        this._sessionContext$Map.set(websocket, new Promise(async (resolve, reject) => {
+                            try {
+                                const importsOnConnectHooks$ = subscriptionHooks.map(async ({ onConnect }) => onConnect && onConnect(connectionParams, websocket, connectionContext));
+                                const importsOnConnectHooks = await Promise.all(importsOnConnectHooks$);
+                                const importsResult = importsOnConnectHooks.reduce((acc, curr) => ({ ...acc, ...(curr || {}) }), {});
+                                const connectionModuleContext = await this.context(websocket);
+                                const sessionInjector = connectionModuleContext.injector;
+                                const hookResult = await sessionInjector.callHookWithArgs({
+                                    hook: 'onConnect',
+                                    args: [
+                                        connectionParams,
+                                        websocket,
+                                        connectionContext,
+                                    ],
+                                    instantiate: true,
+                                    async: true,
+                                });
+                                resolve({
+                                    ...importsResult,
+                                    ...connectionModuleContext,
+                                    ...hookResult,
+                                });
+                            }
+                            catch (e) {
+                                reject(e);
+                            }
+                        }));
+                    }
+                    return this._sessionContext$Map.get(websocket);
+                },
+                onOperation: (message, params, websocket) => {
+                    if (!this.paramsOnOperationResult$Map.has(params)) {
+                        this.paramsOnOperationResult$Map.set(params, new Promise(async (resolve, reject) => {
+                            try {
+                                const importsOnOperationHooks$ = subscriptionHooks.map(async ({ onOperation }) => onOperation && onOperation(message, params, websocket));
+                                const importsOnOperationHooks = await Promise.all(importsOnOperationHooks$);
+                                const importsResult = importsOnOperationHooks.reduce((acc, curr) => ({ ...acc, ...acc(curr || {}) }), {});
+                                const connectionModuleContext = await this.context(websocket);
+                                const sessionInjector = connectionModuleContext.injector;
+                                const moduleOnOperationResult = await sessionInjector.callHookWithArgs({
+                                    hook: 'onOperation',
+                                    args: [
+                                        message,
+                                        params,
+                                        websocket,
+                                    ],
+                                    instantiate: true,
+                                    async: true,
+                                });
+                                resolve({
+                                    ...importsResult,
+                                    ...moduleOnOperationResult,
+                                });
+                            }
+                            catch (e) {
+                                reject(e);
+                            }
+                        }));
+                    }
+                    return this.paramsOnOperationResult$Map.get(params);
+                },
+                onOperationComplete: (websocket, opId) => {
+                    // tslint:disable-next-line: no-construct
+                    opId = new String(opId);
+                    if (!this.opIdOnOperationCompleteResult$Map.has(opId)) {
+                        this.opIdOnOperationCompleteResult$Map.set(opId, new Promise(async (resolve, reject) => {
+                            try {
+                                const importsOnOperationCompleteHooks$ = subscriptionHooks.map(async ({ onOperationComplete }) => onOperationComplete && onOperationComplete(websocket, opId));
+                                const importsOnOperationCompleteHooks = await Promise.all(importsOnOperationCompleteHooks$);
+                                const importsResult = importsOnOperationCompleteHooks.reduce((acc, curr) => ({ ...acc, ...acc(curr || {}) }), {});
+                                const connectionModuleContext = await this.context(websocket);
+                                const sessionInjector = connectionModuleContext.injector;
+                                const moduleOnOperationCompleteResult = await sessionInjector.callHookWithArgs({
+                                    hook: 'onOperationComplete',
+                                    args: [
+                                        websocket,
+                                        opId,
+                                    ],
+                                    instantiate: true,
+                                    async: true,
+                                });
+                                resolve({
+                                    ...importsResult,
+                                    ...moduleOnOperationCompleteResult,
+                                });
+                            }
+                            catch (e) {
+                                reject(e);
+                            }
+                        }));
+                    }
+                    return this.opIdOnOperationCompleteResult$Map.get(opId);
+                },
+                onDisconnect: (websocket, connectionContext) => {
+                    websocket['_moduleOnDisconnect$Map'] = websocket['_moduleOnDisconnect$Map'] || new WeakMap();
+                    const moduleOnDisconnect$Map = websocket['_moduleOnDisconnect$Map'];
+                    if (!moduleOnDisconnect$Map.has(this)) {
+                        moduleOnDisconnect$Map.set(this, new Promise(async (resolve, reject) => {
+                            try {
+                                const importsOnDisconnectHooks$ = subscriptionHooks.map(async ({ onDisconnect }) => onDisconnect && onDisconnect(websocket, connectionContext));
+                                const importsOnDisconnectHooks = await Promise.all(importsOnDisconnectHooks$);
+                                importsOnDisconnectHooks.reduce((acc, curr) => ({ ...acc, ...(curr || {}) }), {});
+                                const connectionModuleContext = await this.context(websocket);
+                                const sessionInjector = connectionModuleContext.injector;
+                                await sessionInjector.callHookWithArgs({
+                                    hook: 'onDisconnect',
+                                    args: [
+                                        websocket,
+                                        connectionContext,
+                                    ],
+                                    instantiate: true,
+                                    async: true,
+                                });
+                                this.destroySelfSession(websocket);
+                                resolve();
+                            }
+                            catch (e) {
+                                reject(e);
+                            }
+                        }));
+                    }
+                    return moduleOnDisconnect$Map.get(this);
+                },
+            };
+        }
+        return this._cache.subscriptionHooks;
+    }
+    get selfDefaultProviderScope() {
+        let defaultProviderScope = _graphql_modules_di__WEBPACK_IMPORTED_MODULE_2__[/* ProviderScope */ "a"].Application;
+        const defaultProviderScopeDefinition = this._options.defaultProviderScope;
+        if (defaultProviderScopeDefinition) {
+            if (typeof defaultProviderScopeDefinition === 'function') {
+                defaultProviderScope = defaultProviderScopeDefinition(this);
+            }
+            else {
+                defaultProviderScope = defaultProviderScopeDefinition;
+            }
+        }
+        return defaultProviderScope;
+    }
+    get selfExtraSchemas() {
+        let extraSchemas = new Array();
+        const extraSchemasDefinitions = this._options.extraSchemas;
+        if (extraSchemasDefinitions) {
+            if (typeof extraSchemasDefinitions === 'function') {
+                this.checkConfiguration();
+                extraSchemas = extraSchemasDefinitions(this);
+            }
+            else {
+                extraSchemas = extraSchemasDefinitions;
+            }
+        }
+        return extraSchemas;
+    }
+    /**
+     * Returns the GraphQL type definitions of the module
+     * @return a `string` with the merged type definitions
+     */
+    get selfTypeDefs() {
+        let typeDefs = null;
+        let typeDefsDefinitions = this._options.typeDefs;
+        if (typeDefsDefinitions) {
+            if (typeof typeDefsDefinitions === 'function') {
+                this.checkConfiguration();
+                typeDefsDefinitions = typeDefsDefinitions(this);
+            }
+            if (typeof typeDefsDefinitions === 'string') {
+                typeDefs = Object(graphql__WEBPACK_IMPORTED_MODULE_3__["parse"])(typeDefsDefinitions);
+            }
+            else if (Array.isArray(typeDefsDefinitions)) {
+                typeDefsDefinitions = typeDefsDefinitions.filter(typeDefsDefinition => typeDefsDefinition);
+                if (typeDefsDefinitions.length) {
+                    typeDefs = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeTypeDefs"])(typeDefsDefinitions, {
+                        useSchemaDefinition: false,
+                    });
+                }
+            }
+            else if (typeDefsDefinitions instanceof graphql__WEBPACK_IMPORTED_MODULE_3__["GraphQLSchema"]) {
+                typeDefs = Object(graphql__WEBPACK_IMPORTED_MODULE_3__["parse"])(Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["printSchemaWithDirectives"])(typeDefsDefinitions));
+            }
+            else if (typeDefsDefinitions instanceof Promise) {
+                throw new Error(`
+          typeDefs of ${this.name} is not sync. So, you need to wait for it.
+          Please wait for 'typeDefsAsync' promise before starting your GraphQL Server.
+        `);
+            }
+            else if (typeDefsDefinitions) {
+                typeDefs = typeDefsDefinitions;
+            }
+        }
+        return typeDefs;
+    }
+    get selfTypeDefsAsync() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let typeDefs = null;
+                let typeDefsDefinitions = await this._options.typeDefs;
+                if (typeDefsDefinitions) {
+                    if (typeof typeDefsDefinitions === 'function') {
+                        this.checkConfiguration();
+                        typeDefsDefinitions = await typeDefsDefinitions(this);
+                    }
+                    if (typeof typeDefsDefinitions === 'string') {
+                        typeDefs = Object(graphql__WEBPACK_IMPORTED_MODULE_3__["parse"])(typeDefsDefinitions);
+                    }
+                    else if (Array.isArray(typeDefsDefinitions)) {
+                        typeDefsDefinitions = typeDefsDefinitions.filter(typeDefsDefinition => typeDefsDefinition);
+                        if (typeDefsDefinitions.length) {
+                            typeDefs = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeTypeDefs"])(typeDefsDefinitions, {
+                                useSchemaDefinition: false,
+                            });
+                        }
+                    }
+                    else if (typeDefsDefinitions instanceof graphql__WEBPACK_IMPORTED_MODULE_3__["GraphQLSchema"]) {
+                        typeDefs = Object(graphql__WEBPACK_IMPORTED_MODULE_3__["parse"])(Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["printSchemaWithDirectives"])(typeDefsDefinitions));
+                    }
+                    else if (typeDefsDefinitions) {
+                        typeDefs = typeDefsDefinitions;
+                    }
+                }
+                resolve(typeDefs);
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+    get selfResolvers() {
+        let resolvers = {};
+        let resolversDefinitions = this._options.resolvers;
+        if (resolversDefinitions) {
+            if (typeof resolversDefinitions === 'function') {
+                this.checkConfiguration();
+                resolversDefinitions = this.injector.call(resolversDefinitions, this);
+            }
+            if (resolversDefinitions instanceof Promise) {
+                throw new Error(`
+          Resolvers of ${this.name} is not sync. So, you need to wait for it.
+          Please wait for 'resolversAsync' promise before starting your GraphQL Server.
+        `);
+            }
+            if (Array.isArray(resolversDefinitions)) {
+                resolversDefinitions = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeResolvers"])(resolversDefinitions);
+            }
+            resolvers = resolversDefinitions;
+        }
+        return resolvers;
+    }
+    get selfResolversAsync() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let resolvers = {};
+                let resolversDefinitions = await this._options.resolvers;
+                if (resolversDefinitions) {
+                    if (typeof resolversDefinitions === 'function') {
+                        this.checkConfiguration();
+                        resolversDefinitions = await this.injector.call(resolversDefinitions, this);
+                    }
+                    if (Array.isArray(resolversDefinitions)) {
+                        resolversDefinitions = Object(graphql_toolkit__WEBPACK_IMPORTED_MODULE_0__["mergeResolvers"])(resolversDefinitions);
+                    }
+                    resolvers = resolversDefinitions;
+                }
+                resolve(resolvers);
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+    get selfImports() {
+        let imports = new Array();
+        if (this._options.imports) {
+            if (typeof this._options.imports === 'function') {
+                this.checkConfiguration();
+                imports = this._options.imports(this);
+            }
+            else {
+                imports = this._options.imports;
+            }
+        }
+        if (imports.find(module => typeof module === 'undefined')) {
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__[/* DependencyModuleUndefinedError */ "a"](this.name);
+        }
+        return imports;
+    }
+    get selfProviders() {
+        let providers = new Array();
+        const providersDefinitions = this._options.providers;
+        if (providersDefinitions) {
+            if (typeof providersDefinitions === 'function') {
+                this.checkConfiguration();
+                providers = providersDefinitions(this);
+            }
+            else {
+                providers = providersDefinitions;
+            }
+        }
+        return [
+            {
+                provide: ModuleConfig(this),
+                useValue: this.config,
+            },
+            ...providers,
+        ];
+    }
+    get selfResolversComposition() {
+        let resolversComposition = {};
+        const resolversCompositionDefinitions = this._options.resolversComposition;
+        if (resolversCompositionDefinitions) {
+            if (resolversCompositionDefinitions instanceof Function) {
+                this.checkConfiguration();
+                resolversComposition = this.injector.call(resolversCompositionDefinitions, this);
+            }
+            else {
+                resolversComposition = resolversCompositionDefinitions;
+            }
+        }
+        return resolversComposition;
+    }
+    get selfSchemaDirectives() {
+        let schemaDirectives = {};
+        const schemaDirectivesDefinitions = this._options.schemaDirectives;
+        if (schemaDirectivesDefinitions) {
+            if (typeof schemaDirectivesDefinitions === 'function') {
+                this.checkConfiguration();
+                schemaDirectives = this.injector.call(schemaDirectivesDefinitions, this);
+            }
+            else {
+                schemaDirectives = schemaDirectivesDefinitions;
+            }
+        }
+        return schemaDirectives;
+    }
+    get selfDirectiveResolvers() {
+        let directiveResolvers = {};
+        const directiveResolversDefinitions = this._options.directiveResolvers;
+        if (directiveResolversDefinitions) {
+            if (typeof directiveResolversDefinitions === 'function') {
+                this.checkConfiguration();
+                directiveResolvers = this.injector.call(directiveResolversDefinitions, this);
+            }
+            else {
+                directiveResolvers = directiveResolversDefinitions;
+            }
+        }
+        return directiveResolvers;
+    }
+    addSessionInjectorToSelfResolversContext(resolvers) {
+        // tslint:disable-next-line:forin
+        for (const type in resolvers) {
+            const typeResolvers = resolvers[type];
+            if (!(typeResolvers instanceof graphql__WEBPACK_IMPORTED_MODULE_3__["GraphQLScalarType"])) {
+                // tslint:disable-next-line:forin
+                for (const prop in resolvers[type]) {
+                    const resolver = typeResolvers[prop];
+                    if (typeof resolver === 'function') {
+                        if (prop !== '__resolveType') {
+                            typeResolvers[prop] = async (root, args, appContext, info) => {
+                                if (appContext instanceof Promise) {
+                                    appContext = await appContext;
+                                }
+                                else if (typeof appContext === 'undefined') {
+                                    appContext = info;
+                                }
+                                info.session = info.session || appContext.session || appContext;
+                                let moduleContext;
+                                try {
+                                    moduleContext = await this.context(info.session, true);
+                                }
+                                catch (e) {
+                                    const logger = this.selfLogger;
+                                    if ('clientError' in logger) {
+                                        logger.clientError(e);
+                                    }
+                                    throw e;
+                                }
+                                info.schema = this.schema;
+                                return resolver.call(typeResolvers[prop], root, args, moduleContext, info);
+                            };
+                        }
+                        else {
+                            typeResolvers[prop] = async (root, appContext, info) => {
+                                if (appContext instanceof Promise) {
+                                    appContext = await appContext;
+                                }
+                                else if (typeof appContext === 'undefined') {
+                                    appContext = info;
+                                }
+                                info.session = info.session || appContext.session || appContext;
+                                let moduleContext;
+                                try {
+                                    moduleContext = await this.context(info.session, true);
+                                }
+                                catch (e) {
+                                    const logger = this.selfLogger;
+                                    if ('clientError' in logger) {
+                                        logger.clientError(e);
+                                    }
+                                    throw e;
+                                }
+                                info.schema = this.schema;
+                                return resolver.call(typeResolvers, root, moduleContext, info);
+                            };
+                        }
+                    }
+                    else if (resolver && typeof resolver === 'object' && 'subscribe' in resolver) {
+                        const subscriber = resolver['subscribe'];
+                        typeResolvers[prop]['subscribe'] = async (root, args, appContext, info) => {
+                            if (appContext instanceof Promise) {
+                                appContext = await appContext;
+                            }
+                            else if (typeof appContext === 'undefined') {
+                                appContext = info;
+                            }
+                            info.session = info.session || appContext.session || appContext;
+                            let moduleContext;
+                            try {
+                                moduleContext = await this.context(info.session, true);
+                            }
+                            catch (e) {
+                                const logger = this.selfLogger;
+                                if ('clientError' in logger) {
+                                    logger.clientError(e);
+                                }
+                                throw e;
+                            }
+                            info.schema = this.schema;
+                            return subscriber.call(typeResolvers[prop], root, args, moduleContext, info);
+                        };
+                    }
+                }
+            }
+        }
+        return resolvers;
+    }
+    addSessionInjectorToSelfResolversCompositionContext(resolversComposition) {
+        const visitResolversCompositionElem = (compositionArr) => {
+            return [
+                (next) => async (root, args, appContext, info) => {
+                    if (appContext instanceof Promise) {
+                        appContext = await appContext;
+                    }
+                    else if (typeof appContext === 'undefined') {
+                        appContext = info;
+                    }
+                    info.session = info.session || appContext.session || appContext;
+                    let moduleContext;
+                    try {
+                        moduleContext = await this.context(info.session, true);
+                    }
+                    catch (e) {
+                        const logger = this.selfLogger;
+                        if ('clientError' in logger) {
+                            logger.clientError(e);
+                        }
+                        throw e;
+                    }
+                    info.schema = this.schema;
+                    return next(root, args, moduleContext, info);
+                },
+                ...compositionArr,
+            ];
+        };
+        // tslint:disable-next-line:forin
+        for (const path in resolversComposition) {
+            if (resolversComposition[path] instanceof Function || resolversComposition[path] instanceof Array) {
+                const compositionArr = Object(_helpers__WEBPACK_IMPORTED_MODULE_10__[/* asArray */ "a"])(resolversComposition[path]);
+                resolversComposition[path] = visitResolversCompositionElem(compositionArr);
+            }
+            else {
+                // tslint:disable-next-line: forin
+                for (const subPath in resolversComposition[path]) {
+                    const compositionArr = Object(_helpers__WEBPACK_IMPORTED_MODULE_10__[/* asArray */ "a"])(resolversComposition[path][subPath]);
+                    resolversComposition[path][subPath] = visitResolversCompositionElem(compositionArr);
+                }
+            }
+        }
+        return resolversComposition;
+    }
+    get selfLogger() {
+        let logger = GraphQLModule.defaultLogger;
+        if (typeof this._cache.selfLogger === 'undefined') {
+            const loggerDefinition = this._options.logger;
+            if (loggerDefinition) {
+                if (loggerDefinition instanceof Function) {
+                    this.checkConfiguration();
+                    this._cache.selfLogger = this.injector.call(loggerDefinition, this);
+                }
+                else {
+                    this._cache.selfLogger = loggerDefinition;
+                }
+                logger = this._cache.selfLogger;
+            }
+            else {
+                this._cache.selfLogger = null;
+            }
+        }
+        return logger;
+    }
+    get selfCache() {
+        let cache = GraphQLModule.defaultCache;
+        if (typeof this._cache.selfKeyValueCache === 'undefined') {
+            const cacheDefinition = this._options.cache;
+            if (cacheDefinition) {
+                if (cacheDefinition instanceof Function) {
+                    this.checkConfiguration();
+                    this._cache.selfKeyValueCache = this.injector.call(cacheDefinition, this);
+                }
+                else {
+                    this._cache.selfKeyValueCache = cacheDefinition;
+                }
+                cache = this._cache.selfKeyValueCache;
+            }
+            else {
+                this._cache.selfKeyValueCache = null;
+            }
+        }
+        return cache;
+    }
+    get selfResolverValidationOptions() {
+        let resolverValidationOptions = {};
+        const resolverValidationOptionsDefinitions = this._options.resolverValidationOptions;
+        if (resolverValidationOptionsDefinitions) {
+            if (resolverValidationOptionsDefinitions instanceof Function) {
+                this.checkConfiguration();
+                resolverValidationOptions = this.injector.call(resolverValidationOptionsDefinitions, this);
+            }
+            else {
+                resolverValidationOptions = resolverValidationOptionsDefinitions;
+            }
+        }
+        return resolverValidationOptions;
+    }
+    /**
+     * Build a GraphQL `context` object based on a network session.
+     * It iterates over all modules by their dependency-based order, and executes
+     * `contextBuilder` method.
+     * It also in charge of injecting a reference to the application `Injector` to
+     * the `context`.
+     * The network session is passed to each `contextBuilder` method, and the return
+     * value of each `contextBuilder` is merged into a unified `context` object.
+     *
+     * This method should be in use with your GraphQL manager, such as Apollo-Server.
+     *
+     * @param session - the network session from `connect`, `express`, etc...
+     */
+    get context() {
+        if (!this._cache.contextBuilder) {
+            const selfImports = this.selfImports;
+            this._cache.contextBuilder = (session, excludeSession = false, excludeInjector = false) => {
+                session = Object(_helpers__WEBPACK_IMPORTED_MODULE_10__[/* normalizeSession */ "b"])(session);
+                if (!this._sessionContext$Map.has(session)) {
+                    this._sessionContext$Map.set(session, new Promise(async (resolve, reject) => {
+                        try {
+                            const importsContext = {
+                                injector: undefined,
+                            };
+                            if (selfImports.length) {
+                                const importsContexts = await Promise.all(selfImports.map(module => module.context(session, true, true)));
+                                Object.assign(importsContext, ...importsContexts);
+                            }
+                            const moduleSessionInfo = new _module_session_info__WEBPACK_IMPORTED_MODULE_9__[/* ModuleSessionInfo */ "a"](this, session);
+                            const sessionInjector = moduleSessionInfo.injector;
+                            let moduleContext;
+                            const moduleContextDeclaration = this._options.context;
+                            if (moduleContextDeclaration) {
+                                if (moduleContextDeclaration instanceof Function) {
+                                    importsContext.injector = sessionInjector;
+                                    moduleContext = await moduleContextDeclaration(session, importsContext, moduleSessionInfo);
+                                }
+                                else {
+                                    moduleContext = await moduleContextDeclaration;
+                                }
+                            }
+                            moduleSessionInfo.context = Object.assign(importsContext, moduleContext);
+                            const res = session && session['res'];
+                            if (res && 'once' in res) {
+                                if (!('_onceFinishListeners' in res)) {
+                                    res['_onceFinishListeners'] = [];
+                                    res.once('finish', () => {
+                                        const onceFinishListeners = res['_onceFinishListeners'];
+                                        for (const onceFinishListener of onceFinishListeners) {
+                                            onceFinishListener();
+                                        }
+                                        delete res['_onceFinishListeners'];
+                                    });
+                                }
+                                res['_onceFinishListeners'].push(() => {
+                                    sessionInjector.callHookWithArgs({
+                                        hook: 'onResponse',
+                                        args: [moduleSessionInfo],
+                                        instantiate: true,
+                                        async: false,
+                                    });
+                                    this.destroySelfSession(session);
+                                });
+                            }
+                            sessionInjector.onInstanceCreated = ({ instance }) => {
+                                if (typeof instance !== 'number' &&
+                                    typeof instance !== 'boolean' &&
+                                    typeof instance !== 'string' &&
+                                    'initialize' in instance &&
+                                    typeof instance['initialize'] === 'function') {
+                                    instance['initialize']({ cache: this.selfCache, context: moduleSessionInfo.context });
+                                }
+                            };
+                            await sessionInjector.callHookWithArgs({
+                                hook: 'onRequest',
+                                args: [moduleSessionInfo],
+                                instantiate: true,
+                                async: true,
+                            });
+                            resolve(moduleSessionInfo.context);
+                        }
+                        catch (e) {
+                            reject(e);
+                        }
+                    }));
+                }
+                if (excludeInjector && excludeSession) {
+                    return this._sessionContext$Map.get(session);
+                }
+                return this._sessionContext$Map.get(session).then(moduleContext => {
+                    const finalContext = Object.assign({}, moduleContext);
+                    if (!excludeInjector) {
+                        finalContext.injector = this.injector.getSessionInjector(session);
+                    }
+                    if (!excludeSession) {
+                        finalContext['session'] = session;
+                    }
+                    return finalContext;
+                });
+            };
+        }
+        return this._cache.contextBuilder;
+    }
+    destroySelfSession(session) {
+        this.injector.destroySessionInjector(session);
+        this._sessionContext$Map.delete(session);
+    }
+}
+GraphQLModule.defaultLogger = console;
+GraphQLModule.defaultCache = new apollo_server_caching__WEBPACK_IMPORTED_MODULE_11__["InMemoryLRUCache"]();
+//# sourceMappingURL=graphql-module.js.map
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(28)(module)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("deepmerge");
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-server-caching");
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100,9 +1468,10 @@ module.exports = require("express");
  * Module dependencies.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var app_1 = __webpack_require__(2);
-var debug = __webpack_require__(8)("server:server");
-var http = __webpack_require__(9);
+var app_1 = __webpack_require__(15);
+var Debug = __webpack_require__(29);
+var http = __webpack_require__(30);
+var debug = Debug("server:server");
 /**
  * Get port from environment and store in Express.
  */
@@ -166,89 +1535,641 @@ function onListening() {
 
 
 /***/ }),
-/* 2 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(__dirname) {
+
 Object.defineProperty(exports, "__esModule", { value: true });
-var express = __webpack_require__(0);
-var path_1 = __webpack_require__(3);
-var cookieParser = __webpack_require__(4);
-var logger = __webpack_require__(5);
-var indexRouter = __webpack_require__(6);
-var usersRouter = __webpack_require__(7);
+var express = __webpack_require__(16);
+var cookieParser = __webpack_require__(17);
+var logger = __webpack_require__(18);
+var helmet = __webpack_require__(19);
+var csrf = __webpack_require__(20);
+var graphql_1 = __webpack_require__(21);
 var app = express();
+var csrfProtection = csrf({ cookie: true });
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path_1.join(__dirname, "public")));
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use(helmet());
+graphql_1.GraphQLServer.applyMiddleware({ app: app, cors: true });
+app.use(csrfProtection);
 exports.default = app;
 
-/* WEBPACK VAR INJECTION */}.call(this, "/"))
 
 /***/ }),
-/* 3 */
+/* 16 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("express");
 
 /***/ }),
-/* 4 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = require("cookie-parser");
 
 /***/ }),
-/* 5 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("morgan");
 
 /***/ }),
-/* 6 */
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = require("helmet");
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = require("csurf");
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var express = __webpack_require__(0);
-var router = express.Router();
+"use strict";
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+Object.defineProperty(exports, "__esModule", { value: true });
+var server_1 = __webpack_require__(22);
+exports.GraphQLServer = server_1.GraphQLServer;
 
 
 /***/ }),
-/* 7 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var express = __webpack_require__(0);
-var router = express.Router();
+"use strict";
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-module.exports = router;
+Object.defineProperty(exports, "__esModule", { value: true });
+var apollo_server_express_1 = __webpack_require__(23);
+var schema_1 = __webpack_require__(24);
+var GraphQLServer = new apollo_server_express_1.ApolloServer({ schema: schema_1.schema, context: function (session) { return session; } });
+exports.GraphQLServer = GraphQLServer;
 
 
 /***/ }),
-/* 8 */
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-server-express");
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(__dirname) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var path_1 = __webpack_require__(25);
+var merge_graphql_schemas_1 = __webpack_require__(26);
+var core_1 = __webpack_require__(27);
+var types = merge_graphql_schemas_1.fileLoader(path_1.join(__dirname, "./types"));
+var typeDefs = merge_graphql_schemas_1.mergeTypes(types, { all: true });
+var resolvers = merge_graphql_schemas_1.mergeResolvers(merge_graphql_schemas_1.fileLoader(path_1.join(__dirname, "./resolvers")));
+var schema = new core_1.GraphQLModule({ typeDefs: typeDefs, resolvers: resolvers }).schema;
+exports.schema = schema;
+
+/* WEBPACK VAR INJECTION */}.call(this, "/"))
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = require("merge-graphql-schemas");
+
+/***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _graphql_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ModuleConfig", function() { return _graphql_module__WEBPACK_IMPORTED_MODULE_0__["b"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GraphQLModule", function() { return _graphql_module__WEBPACK_IMPORTED_MODULE_0__["a"]; });
+
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DependencyModuleNotFoundError", function() { return _errors__WEBPACK_IMPORTED_MODULE_1__["a"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SchemaNotValidError", function() { return _errors__WEBPACK_IMPORTED_MODULE_1__["e"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DependencyModuleUndefinedError", function() { return _errors__WEBPACK_IMPORTED_MODULE_1__["b"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TypeDefNotFoundError", function() { return _errors__WEBPACK_IMPORTED_MODULE_1__["f"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ProviderClassNotDecoratedError", function() { return _errors__WEBPACK_IMPORTED_MODULE_1__["d"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ModuleConfigRequiredError", function() { return _errors__WEBPACK_IMPORTED_MODULE_1__["c"]; });
+
+/* harmony import */ var _module_session_info__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ModuleSessionInfo", function() { return _module_session_info__WEBPACK_IMPORTED_MODULE_2__["a"]; });
+
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = function(originalModule) {
+	if (!originalModule.webpackPolyfill) {
+		var module = Object.create(originalModule);
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		Object.defineProperty(module, "exports", {
+			enumerable: true
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("debug");
 
 /***/ }),
-/* 9 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("http");
+
+/***/ }),
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/di/dist/esnext/utils.js
+const DESIGN_PARAMTYPES = 'design:paramtypes';
+const DESIGN_TYPE = 'design:type';
+const PROVIDER_OPTIONS = 'provider-options';
+const PROPERTY_KEYS = 'property-keys';
+function getServiceIdentifierName(serviceIdentifier) {
+    if (typeof serviceIdentifier === 'function' && isType(serviceIdentifier)) {
+        return serviceIdentifier.name;
+    }
+    else if (typeof serviceIdentifier !== 'undefined') {
+        return serviceIdentifier.toString();
+    }
+    else {
+        return 'undefined';
+    }
+}
+function isType(v) {
+    return typeof v === 'function' && 'prototype' in v;
+}
+function isTypeProvider(v) {
+    return isType(v);
+}
+function isValueProvider(v) {
+    return 'useValue' in v;
+}
+function isClassProvider(v) {
+    return 'useClass' in v && isType(v.useClass);
+}
+function isFactoryProvider(v) {
+    return 'useFactory' in v && typeof v.useFactory === 'function';
+}
+//# sourceMappingURL=utils.js.map
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/di/dist/esnext/errors/provider-already-defined.js
+
+class provider_already_defined_ProviderAlreadyDefinedError extends Error {
+    constructor(_moduleName, _serviceIdentifier) {
+        super(`
+      GraphQL-Modules Error: Provider has been already defined!
+      - #Module #${_moduleName} already has a #Provider #${getServiceIdentifierName(_serviceIdentifier)}.
+
+      Possible solutions:
+      - Provider must have 'override: true' field.
+    `);
+        this._moduleName = _moduleName;
+        this._serviceIdentifier = _serviceIdentifier;
+        Object.setPrototypeOf(this, provider_already_defined_ProviderAlreadyDefinedError.prototype);
+        Error.captureStackTrace(this, provider_already_defined_ProviderAlreadyDefinedError);
+    }
+    get moduleName() {
+        return this._moduleName;
+    }
+    get serviceIdentifier() {
+        return this._serviceIdentifier;
+    }
+}
+//# sourceMappingURL=provider-already-defined.js.map
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/di/dist/esnext/errors/provider-not-valid.js
+
+class provider_not_valid_ProviderNotValidError extends Error {
+    constructor(_moduleName, _serviceIdentifier) {
+        super(`
+      GraphQL-Modules Error: Provider is not valid!
+      - #Module #${_moduleName} provides an invalid #Provider #${getServiceIdentifierName(_serviceIdentifier)}!
+
+      Possible solutions:
+      - Provider must be a class itself,
+        or provides a valid identifier with 'useValue', 'useFactory' or 'useClass'.
+    `);
+        this._moduleName = _moduleName;
+        this._serviceIdentifier = _serviceIdentifier;
+        Object.setPrototypeOf(this, provider_not_valid_ProviderNotValidError.prototype);
+        Error.captureStackTrace(this, provider_not_valid_ProviderNotValidError);
+    }
+    get moduleName() {
+        return this._moduleName;
+    }
+    get serviceIdentifier() {
+        return this._serviceIdentifier;
+    }
+}
+//# sourceMappingURL=provider-not-valid.js.map
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/di/dist/esnext/errors/service-identifier-not-found.js
+
+class service_identifier_not_found_ServiceIdentifierNotFoundError extends Error {
+    constructor(_serviceIdentifier, _dependent) {
+        super(`
+      GraphQL-Modules Error: Dependency Provider Not Found!
+      - Provider #${getServiceIdentifierName(_serviceIdentifier)} not provided in #Module ${_dependent} scope!
+
+      Possible solutions:
+      - Check if you have this provider in your module.
+      - Check if you have the module of this provider imported in your dependent modules.
+    `);
+        this._serviceIdentifier = _serviceIdentifier;
+        this._dependent = _dependent;
+        Object.setPrototypeOf(this, service_identifier_not_found_ServiceIdentifierNotFoundError.prototype);
+        Error.captureStackTrace(this, service_identifier_not_found_ServiceIdentifierNotFoundError);
+    }
+    get dependent() {
+        return this._dependent;
+    }
+    get serviceIdentifier() {
+        return this._serviceIdentifier;
+    }
+}
+//# sourceMappingURL=service-identifier-not-found.js.map
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/di/dist/esnext/errors/dependency-provider-not-found.js
+
+class dependency_provider_not_found_DependencyProviderNotFoundError extends Error {
+    constructor(_dependency, _dependent, _moduleName) {
+        super(`
+      GraphQL-Modules Error: Dependency Provider Not Found!
+      - Provider #${getServiceIdentifierName(_dependency)} couldn't be injected into Provider #${getServiceIdentifierName(_dependent)}
+      -- Provider #${getServiceIdentifierName(_dependency)} is not provided in #Module ${_moduleName} scope!
+
+      Possible solutions:
+      - Make sure you have imported the module of Provider #${getServiceIdentifierName(_dependency)} in the module of Provider #${getServiceIdentifierName(_dependent)}
+  `);
+        this._dependency = _dependency;
+        this._dependent = _dependent;
+        this._moduleName = _moduleName;
+        Object.setPrototypeOf(this, dependency_provider_not_found_DependencyProviderNotFoundError.prototype);
+        Error.captureStackTrace(this, dependency_provider_not_found_DependencyProviderNotFoundError);
+    }
+    get dependency() {
+        return this._dependency;
+    }
+    get dependent() {
+        return this._dependent;
+    }
+    get moduleName() {
+        return this._moduleName;
+    }
+}
+//# sourceMappingURL=dependency-provider-not-found.js.map
+// EXTERNAL MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/di/dist/esnext/types.js
+var types = __webpack_require__(0);
+
+// CONCATENATED MODULE: /mnt/c/Users/coder/source/repos/agent-tracker/node_modules/@graphql-modules/di/dist/esnext/injector.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return injector_Injector; });
+
+
+
+class injector_Injector {
+    constructor(options = {}) {
+        this.options = options;
+        this._classMap = new Map();
+        this._factoryMap = new Map();
+        this._applicationScopeInstanceMap = new Map();
+        this._sessionScopeInstanceMap = new Map();
+        this._applicationScopeServiceIdentifiers = new Array();
+        this._requestScopeServiceIdentifiers = new Array();
+        this._sessionScopeServiceIdentifiers = new Array();
+        this._hookServiceIdentifiersMap = new Map();
+        this._name = this.options.name || Date.now().toString();
+        this._injectorScope = this.options.injectorScope || types["a" /* ProviderScope */].Application;
+        this._defaultProviderScope = this.options.defaultProviderScope || this._injectorScope;
+        this._hooks = this.options.hooks || new Array();
+        this._initialProviders = this.options.initialProviders || new Array();
+        this._children = this.options.children || new Array();
+        this.onInstanceCreated = () => { };
+        this._sessionSessionInjectorMap = new WeakMap();
+        for (const provider of this._initialProviders) {
+            if (provider) {
+                this.provide(provider);
+            }
+        }
+    }
+    addChild(...children) {
+        for (const child of children) {
+            this._children.push(child);
+        }
+    }
+    removeChild(...children) {
+        for (const child of children) {
+            this._children.splice(this._children.indexOf(child), 1);
+        }
+    }
+    hasChild(child) {
+        return this._children.includes(child);
+    }
+    getScopeInstanceMap(providerScope = this._injectorScope) {
+        switch (providerScope) {
+            case types["a" /* ProviderScope */].Application:
+                return this._applicationScopeInstanceMap;
+            case types["a" /* ProviderScope */].Session:
+                return this._sessionScopeInstanceMap;
+            case types["a" /* ProviderScope */].Request:
+                return new Map();
+        }
+    }
+    provide(provider) {
+        if (isTypeProvider(provider)) {
+            const options = Reflect.getMetadata(PROVIDER_OPTIONS, provider);
+            if (this.has(provider)) {
+                throw new provider_already_defined_ProviderAlreadyDefinedError(this._name, provider);
+            }
+            this._classMap.set(provider, provider);
+            switch ((options && options.scope) || this._defaultProviderScope) {
+                case types["a" /* ProviderScope */].Application:
+                    this._applicationScopeServiceIdentifiers.push(provider);
+                    break;
+                case types["a" /* ProviderScope */].Request:
+                    this._requestScopeServiceIdentifiers.push(provider);
+                    break;
+                case types["a" /* ProviderScope */].Session:
+                    this._sessionScopeServiceIdentifiers.push(provider);
+                    break;
+            }
+            for (const hook of this._hooks) {
+                if (hook in provider.prototype) {
+                    if (!this._hookServiceIdentifiersMap.has(hook)) {
+                        this._hookServiceIdentifiersMap.set(hook, []);
+                    }
+                    this._hookServiceIdentifiersMap.get(hook).push(provider);
+                }
+            }
+            return;
+        }
+        if (this.has(provider.provide)) {
+            if (!provider.overwrite) {
+                throw new provider_already_defined_ProviderAlreadyDefinedError(this._name, provider.provide);
+            }
+            else {
+                this._classMap.delete(provider.provide);
+                this._factoryMap.delete(provider.provide);
+                this.getScopeInstanceMap().delete(provider.provide);
+                this._applicationScopeServiceIdentifiers.splice(this._applicationScopeServiceIdentifiers.indexOf(provider.provide), 1);
+                this._sessionScopeServiceIdentifiers.splice(this._applicationScopeServiceIdentifiers.indexOf(provider.provide), 1);
+                this._requestScopeServiceIdentifiers.splice(this._applicationScopeServiceIdentifiers.indexOf(provider.provide), 1);
+            }
+        }
+        if (isValueProvider(provider)) {
+            this.getScopeInstanceMap().set(provider.provide, provider.useValue);
+        }
+        else if (isClassProvider(provider)) {
+            this._classMap.set(provider.provide, provider.useClass);
+            for (const hook of this._hooks) {
+                if (hook in provider.useClass.prototype) {
+                    if (!this._hookServiceIdentifiersMap.has(hook)) {
+                        this._hookServiceIdentifiersMap.set(hook, []);
+                    }
+                    this._hookServiceIdentifiersMap.get(hook).push(provider.useClass);
+                }
+            }
+        }
+        else if (isFactoryProvider(provider)) {
+            this._factoryMap.set(provider.provide, provider.useFactory);
+        }
+        else {
+            throw new provider_not_valid_ProviderNotValidError(this._name, provider['provide'] && provider);
+        }
+        switch (provider.scope || this._defaultProviderScope) {
+            case types["a" /* ProviderScope */].Application:
+                this._applicationScopeServiceIdentifiers.push(provider.provide);
+                break;
+            case types["a" /* ProviderScope */].Request:
+                this._requestScopeServiceIdentifiers.push(provider.provide);
+                break;
+            case types["a" /* ProviderScope */].Session:
+                this._sessionScopeServiceIdentifiers.push(provider.provide);
+                break;
+        }
+    }
+    has(serviceIdentifier) {
+        return (this.getScopeInstanceMap(types["a" /* ProviderScope */].Application).has(serviceIdentifier) ||
+            this.getScopeInstanceMap(types["a" /* ProviderScope */].Session).has(serviceIdentifier) ||
+            this._classMap.has(serviceIdentifier) ||
+            this._factoryMap.has(serviceIdentifier));
+    }
+    remove(serviceIdentifier) {
+        this.getScopeInstanceMap().delete(serviceIdentifier);
+        this._classMap.delete(serviceIdentifier);
+        this._factoryMap.delete(serviceIdentifier);
+    }
+    get scopeServiceIdentifiers() {
+        switch (this._injectorScope) {
+            case types["a" /* ProviderScope */].Application:
+                return this._applicationScopeServiceIdentifiers;
+            case types["a" /* ProviderScope */].Request:
+                return this._requestScopeServiceIdentifiers;
+            case types["a" /* ProviderScope */].Session:
+                return this._sessionScopeServiceIdentifiers;
+        }
+    }
+    get(serviceIdentifier) {
+        const applicationScopeInstanceMap = this.getScopeInstanceMap(types["a" /* ProviderScope */].Application);
+        const sessionScopeInstanceMap = this.getScopeInstanceMap(types["a" /* ProviderScope */].Session);
+        if (sessionScopeInstanceMap.has(serviceIdentifier)) {
+            return sessionScopeInstanceMap.get(serviceIdentifier);
+        }
+        else if (applicationScopeInstanceMap.has(serviceIdentifier)) {
+            return applicationScopeInstanceMap.get(serviceIdentifier);
+        }
+        else if (this._classMap.has(serviceIdentifier)) {
+            const RealClazz = this._classMap.get(serviceIdentifier);
+            try {
+                const dependencies = Reflect.getMetadata(DESIGN_PARAMTYPES, RealClazz) || [];
+                const dependencyInstances = dependencies.map(dependency => this.get(dependency));
+                const instance = new RealClazz(...dependencyInstances);
+                const propertyKeys = Reflect.getMetadata(PROPERTY_KEYS, RealClazz) || [];
+                for (const propertyKey of propertyKeys) {
+                    const dependency = Reflect.getMetadata(DESIGN_TYPE, RealClazz.prototype, propertyKey);
+                    if (dependency) {
+                        Object.defineProperty(instance, propertyKey, {
+                            value: this.get(dependency),
+                        });
+                    }
+                }
+                if (this._applicationScopeServiceIdentifiers.includes(serviceIdentifier)) {
+                    this._applicationScopeInstanceMap.set(serviceIdentifier, instance);
+                }
+                if (this._sessionScopeServiceIdentifiers.includes(serviceIdentifier)) {
+                    this._sessionScopeInstanceMap.set(serviceIdentifier, instance);
+                }
+                this.onInstanceCreated({ serviceIdentifier, instance });
+                return instance;
+            }
+            catch (e) {
+                if (e instanceof service_identifier_not_found_ServiceIdentifierNotFoundError) {
+                    throw new dependency_provider_not_found_DependencyProviderNotFoundError(e.serviceIdentifier, RealClazz, this._name);
+                }
+                else {
+                    throw e;
+                }
+            }
+        }
+        else if (this._factoryMap.has(serviceIdentifier)) {
+            const factory = this._factoryMap.get(serviceIdentifier);
+            const instance = this.call(factory, this);
+            if (this._applicationScopeServiceIdentifiers.includes(serviceIdentifier)) {
+                this._applicationScopeInstanceMap.set(serviceIdentifier, instance);
+            }
+            if (this._sessionScopeServiceIdentifiers.includes(serviceIdentifier)) {
+                this._sessionScopeInstanceMap.set(serviceIdentifier, instance);
+            }
+            this.onInstanceCreated({ serviceIdentifier, instance });
+            return instance;
+        }
+        else {
+            for (const child of this._children) {
+                try {
+                    const instance = child.get(serviceIdentifier);
+                    return instance;
+                }
+                catch (e) {
+                    if (e instanceof service_identifier_not_found_ServiceIdentifierNotFoundError) {
+                        continue;
+                    }
+                    else {
+                        throw e;
+                    }
+                }
+            }
+            throw new service_identifier_not_found_ServiceIdentifierNotFoundError(serviceIdentifier, this._name);
+        }
+    }
+    hasSessionInjector(session) {
+        return this._sessionSessionInjectorMap.has(session);
+    }
+    getSessionInjector(session) {
+        if (!this._sessionSessionInjectorMap.has(session)) {
+            const sessionInjector = new injector_Injector({
+                name: this._name + '_SESSION',
+                injectorScope: types["a" /* ProviderScope */].Session,
+                hooks: this._hooks,
+                children: this._children.map(child => child.getSessionInjector(session)),
+            });
+            sessionInjector._hookServiceIdentifiersMap = this._hookServiceIdentifiersMap;
+            sessionInjector._applicationScopeInstanceMap = this._applicationScopeInstanceMap;
+            sessionInjector._classMap = this._classMap;
+            sessionInjector._factoryMap = this._factoryMap;
+            sessionInjector._applicationScopeServiceIdentifiers = this._applicationScopeServiceIdentifiers;
+            sessionInjector._requestScopeServiceIdentifiers = this._requestScopeServiceIdentifiers;
+            sessionInjector._sessionScopeServiceIdentifiers = [...this._sessionScopeServiceIdentifiers];
+            this._sessionSessionInjectorMap.set(session, sessionInjector);
+        }
+        return this._sessionSessionInjectorMap.get(session);
+    }
+    destroySessionInjector(session) {
+        return this._sessionSessionInjectorMap.delete(session);
+    }
+    call(fn, thisArg) {
+        if ('hasMetadata' in Reflect && Reflect.hasMetadata(DESIGN_PARAMTYPES, fn)) {
+            const dependencies = Reflect.getMetadata(DESIGN_PARAMTYPES, fn);
+            const instances = dependencies.map((dependency) => this.get(dependency));
+            return fn.call(thisArg, ...instances);
+        }
+        return fn.call(thisArg, thisArg);
+    }
+    async hasHook(hook) {
+        return this._hookServiceIdentifiersMap.has(hook);
+    }
+    callHookWithArgs({ async, ...options }) {
+        if (async) {
+            return this.callHookWithArgsAsync(options);
+        }
+        else {
+            return this.callHookWithArgsSync(options);
+        }
+    }
+    callHookWithArgsSync({ hook, args, instantiate, }) {
+        const finalResult = {};
+        const serviceIdentifiers = this._hookServiceIdentifiersMap.get(hook);
+        if (serviceIdentifiers) {
+            Object.assign(finalResult, ...serviceIdentifiers.map(serviceIdentifier => {
+                if (!instantiate && !this.getScopeInstanceMap().has(serviceIdentifier)) {
+                    return {};
+                }
+                const instance = this.get(serviceIdentifier);
+                if (instance) {
+                    const result = instance[hook](...args);
+                    if (result) {
+                        return result;
+                    }
+                }
+                return {};
+            }));
+        }
+        return finalResult;
+    }
+    async callHookWithArgsAsync({ hook, args, instantiate, }) {
+        const finalResult = {};
+        const serviceIdentifiers = this._hookServiceIdentifiersMap.get(hook);
+        if (serviceIdentifiers) {
+            Object.assign(finalResult, ...await Promise.all(serviceIdentifiers.map(async (serviceIdentifier) => {
+                if (!instantiate && !this.getScopeInstanceMap().has(serviceIdentifier)) {
+                    return {};
+                }
+                const instance = this.get(serviceIdentifier);
+                if (instance) {
+                    const result = await instance[hook](...args);
+                    if (result) {
+                        return result;
+                    }
+                }
+                return {};
+            })));
+        }
+        return finalResult;
+    }
+}
+//# sourceMappingURL=injector.js.map
 
 /***/ })
 /******/ ])));

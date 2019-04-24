@@ -3,8 +3,10 @@
  */
 
 import app from "../app";
-var debug = require("debug")("server:server");
+import * as Debug from "debug";
 import * as http from "http";
+
+const debug = Debug("server:server");
 
 /**
  * Get port from environment and store in Express.
