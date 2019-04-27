@@ -2,7 +2,9 @@
  * Module dependencies.
  */
 
+require("dotenv").config();
 import "reflect-metadata";
+import "graphql-import-node";
 import app from "../app";
 import * as Debug from "debug";
 import * as http from "http";
@@ -30,7 +32,7 @@ var server = http.createServer(app);
 
 createConnection({
   type: "sqlite",
-  database: "bnb.db",
+  database: process.env.DATABASE,
   synchronize: true,
   entities
 }).then(async () => {
