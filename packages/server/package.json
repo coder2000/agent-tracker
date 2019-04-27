@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node ./node_modules/.bin/webpack --config config/webpack.config.js",
     "start": "node build/compiled",
-    "dev": "DEBUG=* nodemon 'bin/www.ts' --exec 'ts-node' bin/www.ts -e ts,graphql"
+    "dev": "DEBUG=* nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql"
   },
   "dependencies": {
     "@babel/cli": "^7.4.4",
@@ -13,6 +13,7 @@
     "@babel/preset-env": "^7.4.4",
     "@graphql-modules/core": "^0.7.0",
     "apollo-server-express": "^2.4.8",
+    "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "csurf": "^1.10.0",

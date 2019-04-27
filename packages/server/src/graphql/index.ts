@@ -1,1 +1,0 @@
-export { GraphQLServer } from "./server";
