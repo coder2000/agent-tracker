@@ -7575,6 +7575,11 @@ graphql-extensions@0.5.7:
   dependencies:
     "@apollographql/apollo-tools" "^0.3.3"
 
+graphql-import-node@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/graphql-import-node/-/graphql-import-node-0.0.3.tgz#a8270c65b352a16f2103d510b4aad95f494a4bb6"
+  integrity sha512-k8m0EfnkQFvWgOCA6f1Z/A6tXjv+Bpq44izHSc4bgTki4ZgmtomOdQVHscNxdQUA3KstpKVxxOZnu/E8xtzkTw==
+
 graphql-import@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/graphql-import/-/graphql-import-0.7.1.tgz#4add8d91a5f752d764b0a4a7a461fcd93136f223"
@@ -7601,7 +7606,7 @@ graphql-tag-pluck@0.8.0:
     source-map-support "^0.5.9"
     typescript "^3.2.2"
 
-graphql-tag@^2.9.2:
+graphql-tag@^2.10.1, graphql-tag@^2.9.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==

@@ -1,7 +1,7 @@
 const root = require("app-root-path").path;
 
 module.exports = {
-  entry: "./bin/www.ts",
+  entry: "./src/bin/www.ts",
   target: "node",
   externals: [/^[a-z\-0-9]+$/],
   node: {
@@ -14,7 +14,7 @@ module.exports = {
   },
   resolve: {
     // Add in `.ts` and `.tsx` as a resolvable extension.
-    extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+    extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".graphql"],
     modules: [`${root}/node_modules`, "node_modules"]
   },
   resolveLoader: {
@@ -30,6 +30,11 @@ module.exports = {
             loader: "ts-loader"
           }
         ]
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: "graphql-tag/loader"
       }
     ]
   }
