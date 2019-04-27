@@ -8,6 +8,7 @@ import * as helmet from "helmet";
 import * as csrf from "csurf";
 import { ApolloServer } from "apollo-server-express";
 import * as express from "express";
+import { json } from "body-parser";
 import { AppModule } from "./graphql/modules/app.module";
 
 createConnection({
@@ -19,6 +20,7 @@ createConnection({
 
   app.use(helmet());
   app.use(cors());
+  app.use(json());
 
   const csrfProtection = csrf({ cookie: true });
 
