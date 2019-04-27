@@ -2,11 +2,12 @@
  * Module dependencies.
  */
 
+import "reflect-metadata";
 import app from "../app";
 import * as Debug from "debug";
 import * as http from "http";
-import "reflect-metadata";
 import { createConnection } from "typeorm";
+import { entities } from "../models";
 
 const debug = Debug("server:server");
 
@@ -30,7 +31,8 @@ var server = http.createServer(app);
 createConnection({
   type: "sqlite",
   database: "bnb.db",
-  synchronize: true
+  synchronize: true,
+  entities
 }).then(async () => {
   await server.listen(port);
   server.on("error", onError);
