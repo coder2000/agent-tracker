@@ -5,6 +5,8 @@
 import app from "../app";
 import * as Debug from "debug";
 import * as http from "http";
+import "reflect-metadata";
+import { createConnection } from "typeorm";
 
 const debug = Debug("server:server");
 
@@ -25,9 +27,15 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
+createConnection({
+  type: "sqlite",
+  database: "bnb.db",
+  synchronize: true
+}).then(async () => {
+  await server.listen(port);
+  server.on("error", onError);
+  server.on("listening", onListening);
+});
 
 /**
  * Normalize a port into a number, string, or false.

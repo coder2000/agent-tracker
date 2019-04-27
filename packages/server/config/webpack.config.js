@@ -4,6 +4,9 @@ module.exports = {
   entry: "./bin/www.ts",
   target: "node",
   externals: [/^[a-z\-0-9]+$/],
+  node: {
+    __dirname: false
+  },
   output: {
     filename: "compiled", // output file
     path: `${root}/packages/server/build`,

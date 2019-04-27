@@ -10,8 +10,8 @@ const csrfProtection = csrf({ cookie: true });
 
 app.use(logger("dev"));
 app.use(cookieParser());
-app.use(helmet());
+app.use("/graphql", helmet());
 GraphQLServer.applyMiddleware({ app, cors: true });
-app.use(csrfProtection);
+app.use("/graphql", csrfProtection);
 
 export default app;
