@@ -22,10 +22,6 @@ createConnection({
   app.use(cors());
   app.use(json());
 
-  const csrfProtection = csrf({ cookie: true });
-
-  app.use(csrfProtection);
-
   const { schema, context, subscriptions } = AppModule.forRoot({
     connection,
     app
