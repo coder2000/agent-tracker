@@ -5,7 +5,7 @@ import * as typeDefs from "./schema.graphql";
 import resolvers from "./resolvers";
 import { InjectFunction } from "@graphql-modules/di";
 import * as passport from "passport";
-import { GoogleTokenStrategy } from "passport-google-token";
+import { Strategy as GoogleTokenStrategy } from "passport-google-token";
 import { VerifyCallback } from "passport-oauth2";
 
 const GoogleCallback = (

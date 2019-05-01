@@ -1,6 +1,6 @@
 type AuthResponse {
   token: String
-  name: String
+  user: User!
 }
 
 input AuthInput {
@@ -13,4 +13,11 @@ type Query {
 
 type Mutation {
   authenticate(input: AuthInput!): AuthResponse!
+}
+
+type User {
+  firstName: String
+  surname: String
+  emailAddress: String!
+  googleToken: String
 }

@@ -3,6 +3,7 @@ import * as passport from "passport";
 import { Connection } from "typeorm";
 import { User } from "../../../entities/User";
 import { Request, Response } from "express";
+import { AuthResponse } from "../../../types";
 
 @Injectable({
   scope: ProviderScope.Session
@@ -28,7 +29,7 @@ export class AuthProvider {
     token: string,
     req: Request,
     res: Response
-  ): Promise<User | false> {
+  ): Promise<AuthResponse> {
     req.body = {
       ...req.body,
       access_token: token
@@ -43,6 +44,6 @@ export class AuthProvider {
     const userRepository = this.connection.getRepository(User);
     const user = await userRepository.findOneOrFail({ emailAddress: email });
 
-    return user || false;
+    return { user };
   }
 }

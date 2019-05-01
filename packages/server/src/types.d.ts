@@ -14,7 +14,7 @@ export type AuthInput = {
 
 export type AuthResponse = {
   token?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
+  user: User;
 };
 
 export type Mutation = {
@@ -27,6 +27,13 @@ export type MutationAuthenticateArgs = {
 
 export type Query = {
   me: Scalars["String"];
+};
+
+export type User = {
+  firstName?: Maybe<Scalars["String"]>;
+  surname?: Maybe<Scalars["String"]>;
+  emailAddress: Scalars["String"];
+  googleToken?: Maybe<Scalars["String"]>;
 };
 
 import { GraphQLResolveInfo } from "graphql";
@@ -107,6 +114,7 @@ export type ResolversTypes = {
   Mutation: {};
   AuthInput: AuthInput;
   AuthResponse: AuthResponse;
+  User: User;
   Boolean: Scalars["Boolean"];
 };
 
@@ -115,7 +123,7 @@ export type AuthResponseResolvers<
   ParentType = ResolversTypes["AuthResponse"]
 > = {
   token?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
 };
 
 export type MutationResolvers<
@@ -137,10 +145,29 @@ export type QueryResolvers<
   me?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 };
 
+export type UserResolvers<
+  ContextType = any,
+  ParentType = ResolversTypes["User"]
+> = {
+  firstName?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  surname?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  emailAddress?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  googleToken?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+};
+
 export type Resolvers<ContextType = any> = {
   AuthResponse?: AuthResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 };
 
 /**
