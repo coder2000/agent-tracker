@@ -1,13 +1,4 @@
 {
-  "name": "server",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "build": "node ./node_modules/.bin/webpack --config config/webpack.config.js",
-    "start": "node build/compiled",
-    "dev": "DEBUG=* nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql",
-    "generate-types": "graphql-codegen --config codegen.yml"
-  },
   "dependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
@@ -69,5 +60,14 @@
     "typescript": "^3.4.5",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.1"
-  }
+  },
+  "name": "server",
+  "private": true,
+  "scripts": {
+    "build": "node ./node_modules/.bin/webpack --config config/webpack.config.js",
+    "start": "node build/compiled",
+    "dev": "DEBUG=* nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql",
+    "generate-types": "graphql-codegen --config codegen.yml"
+  },
+  "version": "0.0.0"
 }

@@ -1,12 +1,15 @@
-/// <reference path="../../../types/passport-google-token.d.ts" />
 import { GraphQLModule } from "@graphql-modules/core";
-import { IAppModuleConfig } from "../app.module";
-import * as typeDefs from "./schema.graphql";
-import resolvers from "./resolvers";
 import { InjectFunction } from "@graphql-modules/di";
 import * as passport from "passport";
 import { Strategy as GoogleTokenStrategy } from "passport-google-token";
 import { VerifyCallback } from "passport-oauth2";
+import { Connection } from "typeorm";
+import { IAppModuleConfig } from "../app.module";
+import { AuthProvider } from "./providers";
+import { AuthDirective } from "./auth.directive";
+import resolvers from "./resolvers";
+import * as typeDefs from "./schema.graphql";
+/// <reference path="../../../types/passport-google-token.d.ts" />
 
 const GoogleCallback = (
   accessToken: string,
@@ -20,6 +23,10 @@ export const AuthModule = new GraphQLModule<IAppModuleConfig>({
   typeDefs,
   resolvers,
   configRequired: true,
+  providers: ({ config: { connection } }) => [
+    { provide: Connection, useValue: connection },
+    AuthProvider
+  ],
   middleware: InjectFunction()(() => {
     passport.use(
       new GoogleTokenStrategy(
@@ -32,5 +39,8 @@ export const AuthModule = new GraphQLModule<IAppModuleConfig>({
         GoogleCallback
       )
     );
-  })
+  }),
+  schemaDirectives: {
+    AuthDirective
+  }
 });

@@ -1,13 +1,5 @@
+import { defaultFieldResolver, DirectiveLocation, GraphQLDirective, GraphQLEnumType, GraphQLObjectType, GraphQLSchema } from "graphql";
 import { SchemaDirectiveVisitor } from "graphql-tools";
-import {
-  GraphQLObjectType,
-  GraphQLField,
-  defaultFieldResolver,
-  GraphQLSchema,
-  GraphQLDirective,
-  DirectiveLocation,
-  GraphQLEnumType
-} from "graphql";
 
 class AuthDirective extends SchemaDirectiveVisitor {
   public visitObject(type: any) {

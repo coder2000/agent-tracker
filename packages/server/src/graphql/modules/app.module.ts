@@ -1,6 +1,6 @@
 import { GraphQLModule } from "@graphql-modules/core";
-import { Connection } from "typeorm";
 import { Express } from "express";
+import { Connection } from "typeorm";
 import { AuthModule } from "./auth";
 
 export interface IAppModuleConfig {

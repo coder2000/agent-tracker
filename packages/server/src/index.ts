@@ -1,15 +1,14 @@
-require("dotenv").config();
-import "reflect-metadata";
-import "graphql-import-node";
-import { createServer } from "http";
-import { createConnection } from "typeorm";
-import * as cors from "cors";
-import * as helmet from "helmet";
-import * as csrf from "csurf";
 import { ApolloServer } from "apollo-server-express";
-import * as express from "express";
 import { json } from "body-parser";
+import * as cors from "cors";
+import * as express from "express";
+import "graphql-import-node";
+import * as helmet from "helmet";
+import { createServer } from "http";
+import "reflect-metadata";
+import { createConnection } from "typeorm";
 import { AppModule } from "./graphql/modules/app.module";
+require("dotenv").config();
 
 createConnection({
   type: "sqlite",

@@ -1,9 +1,9 @@
 import { Injectable, ProviderScope } from "@graphql-modules/di";
+import { Request, Response } from "express";
 import * as passport from "passport";
 import { Connection } from "typeorm";
-import { User } from "../../../entities/User";
-import { Request, Response } from "express";
-import { AuthResponse } from "../../../types";
+import { User } from "../../../../entities/User";
+import { AuthResponse } from "../../../../types";
 
 @Injectable({
   scope: ProviderScope.Session
@@ -11,7 +11,7 @@ import { AuthResponse } from "../../../types";
 export class AuthProvider {
   currentUser: User;
 
-  constructor(private connection: Connection) {}
+  constructor(private connection: Connection) { }
 
   authenticateGoogle = (req: Request, res: Response) =>
     new Promise<{ data: any; info: any }>((resolve, reject) => {
@@ -43,6 +43,7 @@ export class AuthProvider {
 
     const userRepository = this.connection.getRepository(User);
     const user = await userRepository.findOneOrFail({ emailAddress: email });
+    this.currentUser = user;
 
     return { user };
   }
