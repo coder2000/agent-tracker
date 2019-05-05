@@ -4,6 +4,7 @@ import * as passport from "passport";
 import { Connection } from "typeorm";
 import { User } from "../../../../entities/User";
 import { AuthResponse } from "../../../../types";
+import { JwtProvider } from "./jwt.provider";
 
 @Injectable({
   scope: ProviderScope.Session
@@ -11,7 +12,10 @@ import { AuthResponse } from "../../../../types";
 export class AuthProvider {
   currentUser: User;
 
-  constructor(private connection: Connection) { }
+  constructor(
+    private connection: Connection,
+    private jwtProvider: JwtProvider
+  ) {}
 
   authenticateGoogle = (req: Request, res: Response) =>
     new Promise<{ data: any; info: any }>((resolve, reject) => {
@@ -45,6 +49,8 @@ export class AuthProvider {
     const user = await userRepository.findOneOrFail({ emailAddress: email });
     this.currentUser = user;
 
-    return { user };
+    const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
+
+    return { user, token: jwtToken };
   }
 }

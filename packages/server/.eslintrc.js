@@ -8,10 +8,13 @@ module.exports = {
   plugins: ["@typescript-eslint/eslint-plugin", "prettier", "graphql"],
   extends: [
     "eslint:recommended",
+    "prettier",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   rules: {
-    "prettier/prettier": "error"
+    "prettier/prettier": ["error", {
+      tabWidth: 2
+    }]
   }
 };

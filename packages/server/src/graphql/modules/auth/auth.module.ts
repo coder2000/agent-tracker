@@ -5,7 +5,7 @@ import { Strategy as GoogleTokenStrategy } from "passport-google-token";
 import { VerifyCallback } from "passport-oauth2";
 import { Connection } from "typeorm";
 import { IAppModuleConfig } from "../app.module";
-import { AuthProvider } from "./providers";
+import { AuthProvider, JwtProvider } from "./providers";
 import { AuthDirective } from "./auth.directive";
 import resolvers from "./resolvers";
 import * as typeDefs from "./schema.graphql";
@@ -25,7 +25,8 @@ export const AuthModule = new GraphQLModule<IAppModuleConfig>({
   configRequired: true,
   providers: ({ config: { connection } }) => [
     { provide: Connection, useValue: connection },
-    AuthProvider
+    AuthProvider,
+    JwtProvider
   ],
   middleware: InjectFunction()(() => {
     passport.use(
