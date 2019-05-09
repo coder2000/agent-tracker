@@ -1,7 +1,6 @@
 import { GraphQLModule } from "@graphql-modules/core";
 import { InjectFunction } from "@graphql-modules/di";
 import * as passport from "passport";
-import { Strategy as GoogleTokenStrategy } from "passport-google-token";
 import { VerifyCallback } from "passport-oauth2";
 import { Connection } from "typeorm";
 import { IAppModuleConfig } from "../app.module";
@@ -9,14 +8,25 @@ import { AuthProvider, JwtProvider } from "./providers";
 import { AuthDirective } from "./auth.directive";
 import resolvers from "./resolvers";
 import * as typeDefs from "./schema.graphql";
-/// <reference path="../../../types/passport-google-token.d.ts" />
+import { Request, Response } from "express";
+import { GoogleStrategy, Profile } from "./strategies/google-token";
+
+export interface ISession {
+  req: Request;
+  res: Response;
+}
 
 const GoogleCallback = (
   accessToken: string,
   refreshToken: string,
-  profile: any,
+  profile: Profile,
   done: VerifyCallback
-) => done(null, { accessToken, refreshToken, profile });
+) =>
+  done(null, {
+    accessToken,
+    refreshToken,
+    profile
+  });
 
 export const AuthModule = new GraphQLModule<IAppModuleConfig>({
   name: "Auth",
@@ -30,7 +40,7 @@ export const AuthModule = new GraphQLModule<IAppModuleConfig>({
   ],
   middleware: InjectFunction()(() => {
     passport.use(
-      new GoogleTokenStrategy(
+      new GoogleStrategy(
         {
           authorizationURL: "",
           tokenURL: "",
@@ -43,5 +53,13 @@ export const AuthModule = new GraphQLModule<IAppModuleConfig>({
   }),
   schemaDirectives: {
     AuthDirective
+  },
+  async context(session: ISession, currentContext, {}) {
+    const req = session.req;
+    const res = session.res;
+    return {
+      req,
+      res
+    };
   }
 });

@@ -33,7 +33,7 @@ export class AuthProvider {
     token: string,
     req: Request,
     res: Response
-  ): Promise<AuthResponse> {
+  ): Promise<AuthResponse | false> {
     req.body = {
       ...req.body,
       access_token: token
@@ -41,16 +41,20 @@ export class AuthProvider {
 
     const { data } = await this.authenticateGoogle(req, res);
 
-    const {
-      profile: { email }
-    } = data;
+    if (data) {
+      const {
+        profile: { email }
+      } = data;
 
-    const userRepository = this.connection.getRepository(User);
-    const user = await userRepository.findOneOrFail({ emailAddress: email });
-    this.currentUser = user;
+      const userRepository = this.connection.getRepository(User);
+      const user = await userRepository.findOneOrFail({ emailAddress: email });
+      this.currentUser = user;
 
-    const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
+      const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
 
-    return { user, token: jwtToken };
+      return { user, token: jwtToken };
+    }
+
+    return false;
   }
 }

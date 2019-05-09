@@ -1,1 +1,0 @@
-export { AuthDirective } from "./AuthDirective";
