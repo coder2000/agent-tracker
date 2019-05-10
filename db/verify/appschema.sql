@@ -1,7 +1,9 @@
 -- Verify agent:appschema on pg
+ BEGIN;
 
-BEGIN;
 
--- XXX Add verifications here.
+SELECT pg_catalog.has_schema_privilege('agent', 'usage');
+
 
 ROLLBACK;
+
