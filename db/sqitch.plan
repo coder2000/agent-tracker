@@ -2,3 +2,4 @@
 %project=agent
 %uri=https://github.com/coder2000/agent-tracker
 
+appschema 2019-05-09T17:03:48Z Dieter Lunn <coder2000@gmail.com> # feat: add db schema for tracker
