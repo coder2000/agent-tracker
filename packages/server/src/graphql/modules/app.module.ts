@@ -1,10 +1,10 @@
 import { GraphQLModule } from "@graphql-modules/core";
 import { Express } from "express";
-import { Connection } from "typeorm";
 import { AuthModule } from "./auth";
+import { DatabasePoolType } from "slonik";
 
 export interface IAppModuleConfig {
-  connection: Connection;
+  connection: DatabasePoolType;
   app: Express;
 }
 

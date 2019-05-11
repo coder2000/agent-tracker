@@ -11,7 +11,7 @@ export default {
     authenticate: (
       _: AuthResponse,
       { input: { accessToken } }: MutationAuthenticateArgs,
-      { req, res, injector }: ModuleContext
-    ) => injector.get(AuthProvider).authenticate(accessToken, req, res)
+      { injector }: ModuleContext
+    ) => injector.get(AuthProvider).authenticate(accessToken)
   }
 } as Resolvers;

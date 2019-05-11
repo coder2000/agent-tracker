@@ -6,35 +6,31 @@ import "graphql-import-node";
 import * as helmet from "helmet";
 import { createServer } from "http";
 import "reflect-metadata";
-import { createConnection } from "typeorm";
 import { AppModule } from "./graphql/modules/app.module";
 require("dotenv").config();
+import { createPool } from "slonik";
 
-createConnection({
-  type: "sqlite",
-  database: process.env.DATABASE,
-  synchronize: true
-}).then(async connection => {
-  const app = express();
+const app = express();
 
-  app.use(helmet());
-  app.use(cors());
-  app.use(json());
+const dbPool = createPool(process.env.PG_CONNECTION);
 
-  const { schema, context, subscriptions } = AppModule.forRoot({
-    connection,
-    app
-  });
+app.use(helmet());
+app.use(cors());
+app.use(json());
 
-  const apollo = new ApolloServer({ schema, context, subscriptions });
+const { schema, context, subscriptions } = AppModule.forRoot({
+  connection: dbPool,
+  app
+});
 
-  apollo.applyMiddleware({ app });
+const apollo = new ApolloServer({ schema, context, subscriptions });
 
-  const server = createServer(app);
+apollo.applyMiddleware({ app });
 
-  apollo.installSubscriptionHandlers(server);
+const server = createServer(app);
 
-  await server.listen(process.env.PORT, () => {
-    console.log("Listening");
-  });
+apollo.installSubscriptionHandlers(server);
+
+server.listen(process.env.PORT, () => {
+  console.log("Listening");
 });

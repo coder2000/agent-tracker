@@ -1,10 +1,10 @@
-import { Injectable, ProviderScope } from "@graphql-modules/di";
-import { Request, Response } from "express";
-import * as passport from "passport";
-import { Connection } from "typeorm";
+import { Injectable, ProviderScope, Inject } from "@graphql-modules/di";
 import { User } from "../../../../entities/User";
 import { AuthResponse } from "../../../../types";
 import { JwtProvider } from "./jwt.provider";
+import { DatabasePoolType, sql } from "slonik";
+import { DB_POOL } from "../../app.symbols";
+import { OAuth2Client } from "google-auth-library";
 
 @Injectable({
   scope: ProviderScope.Session
@@ -13,46 +13,34 @@ export class AuthProvider {
   currentUser: User;
 
   constructor(
-    private connection: Connection,
+    @Inject(DB_POOL) private pool: DatabasePoolType,
     private jwtProvider: JwtProvider
   ) {}
 
-  authenticateGoogle = (req: Request, res: Response) =>
-    new Promise<{ data: any; info: any }>((resolve, reject) => {
-      passport.authenticate(
-        "google-token",
-        { session: false },
-        (err, data, info) => {
-          if (err) reject(err);
-          resolve({ data, info });
-        }
-      )(req, res);
+  async authenticate(token: string): Promise<AuthResponse | false> {
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
     });
 
-  async authenticate(
-    token: string,
-    req: Request,
-    res: Response
-  ): Promise<AuthResponse | false> {
-    req.body = {
-      ...req.body,
-      access_token: token
-    };
-
-    const { data } = await this.authenticateGoogle(req, res);
+    const data = ticket.getPayload();
 
     if (data) {
-      const {
-        profile: { email }
-      } = data;
+      const { email } = data;
 
-      const userRepository = this.connection.getRepository(User);
-      const user = await userRepository.findOneOrFail({ emailAddress: email });
-      this.currentUser = user;
+      const user = await this.pool.connect(async connection => {
+        return await connection.oneFirst(
+          sql`SELECT * FROM agent.agents WHERE email = ${email}`
+        );
+      });
 
-      const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
+      //this.currentUser = user;
 
-      return { user, token: jwtToken };
+      //const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
+
+      //return { user, token: jwtToken };
     }
 
     return false;
