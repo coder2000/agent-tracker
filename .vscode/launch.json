@@ -14,7 +14,9 @@
       "cwd": "${workspaceRoot}/packages/server/",
       "protocol": "inspector",
       "env": {
-        "TS_NODE_PROJECT": "${workspaceRoot}/packages/server/tsconfig.json"
+        "TS_NODE_PROJECT": "${workspaceRoot}/packages/server/tsconfig.json",
+        "DEBUG": "*",
+        "ROARR_LOG": "true"
       }
     }
   ]

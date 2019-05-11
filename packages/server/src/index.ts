@@ -9,10 +9,13 @@ import "reflect-metadata";
 import { AppModule } from "./graphql/modules/app.module";
 require("dotenv").config();
 import { createPool } from "slonik";
+import { createQueryLoggingInterceptor } from "slonik-interceptor-query-logging";
 
 const app = express();
 
-const dbPool = createPool(process.env.PG_CONNECTION);
+const interceptors = [createQueryLoggingInterceptor()];
+
+const dbPool = createPool(process.env.PG_CONNECTION, { interceptors });
 
 app.use(helmet());
 app.use(cors());

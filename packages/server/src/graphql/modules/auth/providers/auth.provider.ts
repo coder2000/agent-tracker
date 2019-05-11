@@ -2,7 +2,12 @@ import { Injectable, ProviderScope, Inject } from "@graphql-modules/di";
 import { User } from "../../../../entities/User";
 import { AuthResponse } from "../../../../types";
 import { JwtProvider } from "./jwt.provider";
-import { DatabasePoolType, sql, NotFoundError } from "slonik";
+import {
+  DatabasePoolType,
+  sql,
+  NotFoundError,
+  QueryResultRowType
+} from "slonik";
 import { DB_POOL } from "../../app.symbols";
 import { OAuth2Client } from "google-auth-library";
 
@@ -30,27 +35,42 @@ export class AuthProvider {
     if (data) {
       const { email, given_name, family_name } = data;
 
-      const user = await this.pool.connect(async connection => {
-        try {
-          return await connection.oneFirst(
-            sql`SELECT * FROM agent.agents WHERE email = ${email}`
-          );
-        } catch (error) {
-          if (error instanceof NotFoundError) {
-            return await connection.one(
-              sql`INSERT INTO agent.agents (email, firstName, surname) VALUES (${email}, ${given_name}, ${family_name})`
+      const user = await this.pool.connect(
+        async (connection): Promise<User> => {
+          try {
+            const row = await connection.one(
+              sql`SELECT * FROM agent.agents WHERE email = ${email}`
             );
+
+            return this.buildUser(row);
+          } catch (error) {
+            if (error instanceof NotFoundError) {
+              const row = await connection.one(
+                sql`INSERT INTO agent.agents (email, firstName, surname) VALUES (${email}, ${given_name}, ${family_name})`
+              );
+
+              return this.buildUser(row);
+            }
           }
         }
-      });
+      );
 
-      //this.currentUser = user;
+      this.currentUser = user;
 
-      //const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
+      const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
 
-      //return { user, token: jwtToken };
+      return { user, token: jwtToken };
     }
 
     return false;
+  }
+
+  buildUser(row: QueryResultRowType): User {
+    const user = new User();
+    user.firstName = row["firstName"] as string;
+    user.surname = row["surname"] as string;
+    user.emailAddress = row["email"] as string;
+
+    return user;
   }
 }
