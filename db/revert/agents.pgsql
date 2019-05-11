@@ -1,9 +1,7 @@
 -- Revert agent:agents from pg
- BEGIN;
-
+BEGIN;
 
 DROP TABLE agent.agents;
-
 
 COMMIT;
 

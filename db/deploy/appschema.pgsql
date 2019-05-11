@@ -1,9 +1,7 @@
 -- Deploy agent:appschema to pg
- BEGIN;
-
+BEGIN;
 
 CREATE SCHEMA agent;
-
 
 COMMIT;
 

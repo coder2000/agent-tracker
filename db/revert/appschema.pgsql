@@ -1,9 +1,7 @@
 -- Revert agent:appschema from pg
- BEGIN;
-
+BEGIN;
 
 DROP SCHEMA agent;
-
 
 COMMIT;
 
