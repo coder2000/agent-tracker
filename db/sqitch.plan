@@ -4,3 +4,4 @@
 
 appschema 2019-05-09T17:03:48Z Dieter Lunn <coder2000@gmail.com> # feat: add db schema for tracker
 agents [appschema] 2019-05-10T03:36:32Z Dieter Lunn <coder2000@gmail.com> # Creates table for agents
+get_timestamp [appschema] 2019-05-11T09:05:06Z Dieter Lunn <coder2000@gmail.com> # Add timestamp function
