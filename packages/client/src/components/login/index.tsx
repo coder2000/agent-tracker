@@ -1,47 +1,41 @@
 import * as React from "react";
-import gql from "graphql-tag";
-import { useMutation } from "react-apollo-hooks";
 import { Container, Col, Row } from "react-bootstrap";
 import {
   GoogleLogin,
   GoogleLoginResponse,
   GoogleLoginResponseOffline
 } from "react-google-login";
-
-const AUTHENTICATE = gql`
-  mutation Authenticate($token: AuthInput!) {
-    authenticate(input: $token) {
-      token
-    }
-  }
-`;
-
-let accessToken: string;
-
-const loginFailure = () => {};
+import { useMutation, authenticate } from "../../graphql";
+import { AUTH_TOKEN } from "../../symbols";
 
 export function Login() {
-  const authenticate = useMutation(AUTHENTICATE, {
-    variables: {
-      token: accessToken
-    }
-  });
+  const [accessToken, setAccessToken] = React.useState();
+
+  const auth = useMutation(
+    authenticate({ variables: { input: { accessToken: accessToken } } })
+  );
 
   const loginSuccess = (
     response: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     const data = response as GoogleLoginResponse;
-    const token = data.getAuthResponse().id_token;
+    setAccessToken(data.getAuthResponse().id_token);
 
-    authenticate().then(({ data, errors }) => {});
+    auth().then(({ data }) => {
+      if (data) {
+        localStorage.setItem(AUTH_TOKEN, data.authenticate.token as string);
+      }
+    });
   };
+
+  const loginFailure = () => {};
 
   return (
     <Container>
       <Row>
         <Col>
           <GoogleLogin
-            clientId={process.env.GOOGLE_CLIENT_ID as string}
+            clientId="382601523868-f5vc7qhe4pjs5shajlm6dj3fkorr11d9.apps.googleusercontent.com"
             onSuccess={loginSuccess}
             onFailure={loginFailure}
           />

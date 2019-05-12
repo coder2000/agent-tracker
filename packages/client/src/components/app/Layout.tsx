@@ -34,7 +34,7 @@ export function Layout(props: Props) {
         </Navbar.Brand>
         <Nav className="mr-auto">
           <OverlayTrigger
-            key={"bottom"}
+            key={"stats"}
             placement={"bottom"}
             overlay={<Tooltip id="stats-tooltip">Statistics</Tooltip>}
           >
@@ -43,7 +43,7 @@ export function Layout(props: Props) {
             </Nav.Link>
           </OverlayTrigger>
           <OverlayTrigger
-            key={"bottom"}
+            key={"interactions"}
             placement={"bottom"}
             overlay={<Tooltip id="interactions-tooltip">Interactions</Tooltip>}
           >
@@ -52,7 +52,7 @@ export function Layout(props: Props) {
             </Nav.Link>
           </OverlayTrigger>
           <OverlayTrigger
-            key={"bottom"}
+            key={"supcall"}
             placement={"bottom"}
             overlay={<Tooltip id="supcall-tooltip">Supervisor Calls</Tooltip>}
           >
@@ -61,7 +61,7 @@ export function Layout(props: Props) {
             </Nav.Link>
           </OverlayTrigger>
           <OverlayTrigger
-            key={"bottom"}
+            key={"losses"}
             placement={"bottom"}
             overlay={<Tooltip id="losses-tooltip">Losses</Tooltip>}
           >
@@ -70,7 +70,7 @@ export function Layout(props: Props) {
             </Nav.Link>
           </OverlayTrigger>
           <OverlayTrigger
-            key={"bottom"}
+            key={"consult"}
             placement={"bottom"}
             overlay={<Tooltip id="consult-tooltip">Ticket Consult</Tooltip>}
           >
@@ -79,7 +79,7 @@ export function Layout(props: Props) {
             </Nav.Link>
           </OverlayTrigger>
           <OverlayTrigger
-            key={"bottom"}
+            key={"handoff"}
             placement={"bottom"}
             overlay={<Tooltip id="handoff-tooltip">Handoffs</Tooltip>}
           >

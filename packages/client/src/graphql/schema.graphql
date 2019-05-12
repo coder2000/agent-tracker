@@ -1,0 +1,5 @@
+mutation authenticate($input: AuthInput!) {
+  authenticate(input: $input) {
+    token
+  }
+}
