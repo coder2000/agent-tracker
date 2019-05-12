@@ -3,6 +3,7 @@ import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { AUTH_TOKEN } from "../../symbols";
+import gql from "graphql-tag";
 
 const httpLink = createHttpLink({
   uri: process.env.GRAPHQL_ENDPOINT
@@ -19,9 +20,24 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const cache = new InMemoryCache();
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: cache,
+  resolvers: {}
 });
 
-export { client };
+cache.writeData({
+  data: {
+    isLoggedIn: !!localStorage.getItem(AUTH_TOKEN)
+  }
+});
+
+const IS_LOGGED_IN = gql`
+  query IS_LOGGED_IN {
+    isLoggedIn @client
+  }
+`;
+
+export { client, IS_LOGGED_IN };

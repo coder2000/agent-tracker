@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "react-apollo-hooks";
 import { Layout } from "./Layout";
 import { client } from "../client";
 import loadIcons from "../icons";
