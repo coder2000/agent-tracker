@@ -35,7 +35,7 @@ cache.writeData({
 });
 
 const IS_LOGGED_IN = gql`
-  query IS_LOGGED_IN {
+  query IsLoggedIn {
     isLoggedIn @client
   }
 `;

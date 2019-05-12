@@ -9,6 +9,7 @@ input AuthInput {
 
 type Query {
   me: String!
+  isLoggedIn: Boolean
 }
 
 type Mutation {

@@ -2,11 +2,15 @@ import * as React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "react-apollo-hooks";
 import { Container, Col, Row } from "react-bootstrap";
-import { GoogleLogin } from "react-google-login";
+import {
+  GoogleLogin,
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline
+} from "react-google-login";
 
 const AUTHENTICATE = gql`
-  mutation Authenticate($token: String!) {
-    authenticate(accessToken: $token) {
+  mutation Authenticate($token: AuthInput!) {
+    authenticate(input: $token) {
       token
     }
   }
@@ -23,8 +27,13 @@ export function Login() {
     }
   });
 
-  const loginSuccess = (response: any) => {
-    authenticate(response.tokenId);
+  const loginSuccess = (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    const data = response as GoogleLoginResponse;
+    const token = data.getAuthResponse().id_token;
+
+    authenticate().then(({ data, errors }) => {});
   };
 
   return (

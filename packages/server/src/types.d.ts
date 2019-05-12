@@ -27,6 +27,7 @@ export type MutationAuthenticateArgs = {
 
 export type Query = {
   me: Scalars["String"];
+  isLoggedIn?: Maybe<Scalars["Boolean"]>;
 };
 
 export type User = {
@@ -111,11 +112,11 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Query: {};
   String: Scalars["String"];
+  Boolean: Scalars["Boolean"];
   Mutation: {};
   AuthInput: AuthInput;
   AuthResponse: AuthResponse;
   User: User;
-  Boolean: Scalars["Boolean"];
 };
 
 export type AuthResponseResolvers<
@@ -143,6 +144,11 @@ export type QueryResolvers<
   ParentType = ResolversTypes["Query"]
 > = {
   me?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  isLoggedIn?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type UserResolvers<
