@@ -2,7 +2,7 @@ module.exports = {
   client: {
     service: {
       name: "agent",
-      localSchemaFile: "./graphql.schema.json"
+      localSchemaFile: "./packages/client/graphql.schema.json"
     }
   }
 };

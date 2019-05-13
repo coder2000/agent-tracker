@@ -9,6 +9,7 @@ import {
   Tooltip
 } from "react-bootstrap";
 import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
+import { LoginButton } from "../login";
 
 type Props = {
   children: React.ReactNode;
@@ -88,6 +89,7 @@ export function Layout(props: Props) {
             </Nav.Link>
           </OverlayTrigger>
         </Nav>
+        <LoginButton />
       </Navbar>
       <Container>
         <Row>

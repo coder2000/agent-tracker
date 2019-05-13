@@ -6,7 +6,7 @@ import { AUTH_TOKEN } from "../../symbols";
 import gql from "graphql-tag";
 
 const httpLink = createHttpLink({
-  uri: process.env.GRAPHQL_ENDPOINT
+  uri: "http://localhost:4000/graphql"
 });
 
 const authLink = setContext((_, { headers }) => {

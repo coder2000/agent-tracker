@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from "./Layout";
 import { client } from "../client";
 import loadIcons from "../icons";
-import { Login } from "../login";
+import { Warning } from "./Warning";
 
 export default function App() {
   loadIcons();
@@ -14,7 +14,7 @@ export default function App() {
       <Layout>
         <Router>
           <Switch>
-            <Route path={"/"} component={Login} />
+            <Route path={"/"} component={Warning} />
           </Switch>
         </Router>
       </Layout>
