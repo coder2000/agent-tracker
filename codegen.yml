@@ -1,5 +1,5 @@
 overwrite: true
-schema: packages/server/src/schema.ts
+schema: http://localhost:4000/graphql
 documents:
   - packages/client/src/**/*.tsx
   - packages/client/src/**/*.ts
@@ -9,7 +9,7 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
-  packages/client/src/graphql/types.ts:
+  packages/client/src/graphql/index.tsx:
     plugins:
       - typescript
       - typescript-operations

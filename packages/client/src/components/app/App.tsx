@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ApolloHooksProvider } from "../../graphql";
+import { ApolloProvider } from "react-apollo-hooks";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from "./Layout";
 import { client } from "../client";
@@ -10,7 +10,7 @@ export default function App() {
   loadIcons();
 
   return (
-    <ApolloHooksProvider apolloClient={client}>
+    <ApolloProvider client={client}>
       <Layout>
         <Router>
           <Switch>
@@ -18,6 +18,6 @@ export default function App() {
           </Switch>
         </Router>
       </Layout>
-    </ApolloHooksProvider>
+    </ApolloProvider>
   );
 }

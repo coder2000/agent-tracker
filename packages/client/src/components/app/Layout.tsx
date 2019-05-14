@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
 import { LoginButton } from "../login";
-import { getIsLoggedIn, useQuery } from "../../graphql";
 
 type Props = {
   children: React.ReactNode;
@@ -27,8 +26,6 @@ const AirbnbStyle = {
 
 export function Layout(props: Props) {
   const { children } = props;
-  const { data } = useQuery(getIsLoggedIn());
-  const isLoggedIn = data !== null && data.isLoggedIn;
 
   return (
     <>
@@ -92,7 +89,7 @@ export function Layout(props: Props) {
             </Nav.Link>
           </OverlayTrigger>
         </Nav>
-        {!isLoggedIn && <LoginButton />}
+        <LoginButton />
       </Navbar>
       <Container>
         <Row>

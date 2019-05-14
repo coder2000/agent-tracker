@@ -3,7 +3,6 @@ import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { AUTH_TOKEN } from "../../symbols";
-import gql from "graphql-tag";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql"
@@ -28,16 +27,4 @@ const client = new ApolloClient({
   resolvers: {}
 });
 
-cache.writeData({
-  data: {
-    isLoggedIn: !!localStorage.getItem(AUTH_TOKEN)
-  }
-});
-
-const IS_LOGGED_IN = gql`
-  query IsLoggedIn {
-    isLoggedIn @client
-  }
-`;
-
-export { client, IS_LOGGED_IN };
+export { client };

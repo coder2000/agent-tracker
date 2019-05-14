@@ -1,45 +1,49 @@
+
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
 };
 
 export type AuthInput = {
-  accessToken: Scalars["String"];
+  accessToken: Scalars['String'],
 };
 
 export type AuthResponse = {
-  token?: Maybe<Scalars["String"]>;
-  user: User;
+  token?: Maybe<Scalars['String']>,
+  user: User,
 };
 
 export type Mutation = {
-  authenticate: AuthResponse;
+  authenticate: AuthResponse,
 };
 
+
 export type MutationAuthenticateArgs = {
-  input: AuthInput;
+  input: AuthInput
 };
 
 export type Query = {
-  me: User;
-  isLoggedIn?: Maybe<Scalars["Boolean"]>;
+  me: User,
+  isLoggedIn?: Maybe<Scalars['Boolean']>,
 };
 
 export type User = {
-  firstName?: Maybe<Scalars["String"]>;
-  surname?: Maybe<Scalars["String"]>;
-  emailAddress: Scalars["String"];
-  googleToken?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars['String']>,
+  surname?: Maybe<Scalars['String']>,
+  emailAddress: Scalars['String'],
+  googleToken?: Maybe<Scalars['String']>,
 };
 
-import { GraphQLResolveInfo } from "graphql";
+import { GraphQLResolveInfo } from 'graphql';
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -47,6 +51,7 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   context: TContext,
   info: GraphQLResolveInfo
 ) => Promise<TResult> | TResult;
+
 
 export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
   fragment: string;
@@ -76,15 +81,8 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   resolve?: SubscriptionResolveFn<TResult, TParent, TContext, TArgs>;
 }
 
-export type SubscriptionResolver<
-  TResult,
-  TParent = {},
-  TContext = {},
-  TArgs = {}
-> =
-  | ((
-      ...args: any[]
-    ) => SubscriptionResolverObject<TResult, TParent, TContext, TArgs>)
+export type SubscriptionResolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionResolverObject<TResult, TParent, TContext, TArgs>)
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -95,12 +93,7 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<
-  TResult = {},
-  TParent = {},
-  TContext = {},
-  TArgs = {}
-> = (
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
@@ -110,74 +103,46 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: {};
-  User: User;
-  String: Scalars["String"];
-  Boolean: Scalars["Boolean"];
-  Mutation: {};
-  AuthInput: AuthInput;
-  AuthResponse: AuthResponse;
+  Query: {},
+  User: User,
+  String: Scalars['String'],
+  Boolean: Scalars['Boolean'],
+  Mutation: {},
+  AuthInput: AuthInput,
+  AuthResponse: AuthResponse,
 };
 
-export type AuthResponseResolvers<
-  ContextType = any,
-  ParentType = ResolversTypes["AuthResponse"]
-> = {
-  token?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+export type AuthResponseResolvers<ContextType = any, ParentType = ResolversTypes['AuthResponse']> = {
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
 };
 
-export type MutationResolvers<
-  ContextType = any,
-  ParentType = ResolversTypes["Mutation"]
-> = {
-  authenticate?: Resolver<
-    ResolversTypes["AuthResponse"],
-    ParentType,
-    ContextType,
-    MutationAuthenticateArgs
-  >;
+export type MutationResolvers<ContextType = any, ParentType = ResolversTypes['Mutation']> = {
+  authenticate?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, MutationAuthenticateArgs>,
 };
 
-export type QueryResolvers<
-  ContextType = any,
-  ParentType = ResolversTypes["Query"]
-> = {
-  me?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
-  isLoggedIn?: Resolver<
-    Maybe<ResolversTypes["Boolean"]>,
-    ParentType,
-    ContextType
-  >;
+export type QueryResolvers<ContextType = any, ParentType = ResolversTypes['Query']> = {
+  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  isLoggedIn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
 };
 
-export type UserResolvers<
-  ContextType = any,
-  ParentType = ResolversTypes["User"]
-> = {
-  firstName?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  surname?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  emailAddress?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  googleToken?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
+export type UserResolvers<ContextType = any, ParentType = ResolversTypes['User']> = {
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  surname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  googleToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
-  AuthResponse?: AuthResponseResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
+  AuthResponse?: AuthResponseResolvers<ContextType>,
+  Mutation?: MutationResolvers<ContextType>,
+  Query?: QueryResolvers<ContextType>,
+  User?: UserResolvers<ContextType>,
 };
+
 
 /**
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
- */
+*/
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
