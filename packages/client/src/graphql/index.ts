@@ -61,6 +61,48 @@ export type authenticate_data_authenticate = {
 
 export type authenticate_data_authenticate_token = string;
 
+export const getMe = query<getMe_variables, getMe_data>(gql`
+  query getMe {
+    me {
+      firstName
+      surname
+      emailAddress
+    }
+  }
+`);
+export type getMe_variables = {};
+
+export type getMe_data = {
+  me: getMe_data_me;
+};
+
+export type getMe_data_me = {
+  __typename?: "User";
+  firstName?: Nullable<getMe_data_me_firstName>;
+  surname?: Nullable<getMe_data_me_surname>;
+  emailAddress: getMe_data_me_emailAddress;
+};
+
+export type getMe_data_me_firstName = string;
+export type getMe_data_me_surname = string;
+export type getMe_data_me_emailAddress = string;
+
+export const getIsLoggedIn = query<
+  getIsLoggedIn_variables,
+  getIsLoggedIn_data
+>(gql`
+  query getIsLoggedIn {
+    isLoggedIn @client
+  }
+`);
+export type getIsLoggedIn_variables = {};
+
+export type getIsLoggedIn_data = {
+  isLoggedIn?: Nullable<getIsLoggedIn_data_isLoggedIn>;
+};
+
+export type getIsLoggedIn_data_isLoggedIn = boolean;
+
 /*
  * Boilerplate
  */

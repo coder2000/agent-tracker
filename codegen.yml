@@ -1,0 +1,16 @@
+overwrite: true
+schema: packages/server/src/schema.ts
+documents:
+  - packages/client/src/**/*.tsx
+  - packages/client/src/**/*.ts
+require: ts-node/register/transpile-only
+generates:
+  packages/server/src/types.d.ts:
+    plugins:
+      - typescript
+      - typescript-resolvers
+  packages/client/src/graphql/types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo

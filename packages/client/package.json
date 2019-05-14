@@ -48,8 +48,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/react-router-dom": "^4.3.3",
-    "apollo-hooks-codegen": "^1.2.0",
-    "graphql-code-generator": "^0.18.1"
+    "@types/react-router-dom": "^4.3.3"
   }
 }

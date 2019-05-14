@@ -4,15 +4,16 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline
 } from "react-google-login";
-import { useMutation, authenticate } from "../../graphql";
+import { authenticate, authenticate_variables } from "../../graphql";
+import { useMutation } from "react-apollo-hooks";
 import { AUTH_TOKEN } from "../../symbols";
 
 export function LoginButton() {
   const [accessToken, setAccessToken] = React.useState("");
 
-  const auth = useMutation(
-    authenticate({ variables: { input: { accessToken: accessToken } } })
-  );
+  const auth = useMutation<authenticate, authenticate_variables>(authenticate, {
+    variables: { input: { accessToken: accessToken } }
+  });
 
   const loginSuccess = (
     response: GoogleLoginResponse | GoogleLoginResponseOffline

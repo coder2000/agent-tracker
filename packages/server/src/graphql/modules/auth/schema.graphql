@@ -8,7 +8,7 @@ input AuthInput {
 }
 
 type Query {
-  me: String!
+  me: User!
   isLoggedIn: Boolean
 }
 

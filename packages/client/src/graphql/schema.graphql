@@ -3,3 +3,15 @@ mutation authenticate($input: AuthInput!) {
     token
   }
 }
+
+query getMe {
+  me {
+    firstName
+    surname
+    emailAddress
+  }
+}
+
+query getIsLoggedIn {
+  isLoggedIn @client
+}
