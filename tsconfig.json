@@ -9,9 +9,10 @@
     "emitDecoratorMetadata": true,
     "lib": ["es6", "esnext", "es2015"],
     "moduleResolution": "node",
+    "baseUrl": "./packages/server/src/",
     "paths": {
-      "@entities": ["./packages/server/src/entities/*"],
-      "@modules": ["./packages/server/src/modules/*"]
+      "@entities": ["./entities/*"],
+      "@modules": ["./modules/*"]
     }
   },
   "exclude": ["node_modules", "build", "config", "release"]

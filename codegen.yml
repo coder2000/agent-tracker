@@ -1,5 +1,5 @@
 overwrite: true
-schema: ./packages/server/src/schema.ts
+schema: ./packages/server/src/**/schema.graphql
 documents:
   - packages/client/src/**/*.tsx
   - packages/client/src/**/*.ts

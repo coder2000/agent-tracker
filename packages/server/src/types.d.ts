@@ -9,17 +9,19 @@ export type Scalars = {
   Float: number,
 };
 
+
 export type AuthInput = {
   accessToken: Scalars['String'],
 };
 
 export type AuthResponse = {
-  token?: Maybe<Scalars['String']>,
+  token: Scalars['String'],
   user: User,
 };
 
 export type Mutation = {
   authenticate: AuthResponse,
+  changeRole: User,
 };
 
 
@@ -27,14 +29,27 @@ export type MutationAuthenticateArgs = {
   input: AuthInput
 };
 
-export type Query = {
-  me: User,
-  isLoggedIn?: Maybe<Scalars['Boolean']>,
+
+export type MutationChangeRoleArgs = {
+  role: Role
 };
 
+export type Query = {
+  me: User,
+  getAgents: Array<Maybe<User>>,
+  getLeaders: Array<Maybe<User>>,
+  getCoordinators: Array<Maybe<User>>,
+};
+
+export enum Role {
+  Agent = 'Agent',
+  Coodinator = 'Coodinator',
+  Leader = 'Leader'
+}
+
 export type User = {
-  firstName?: Maybe<Scalars['String']>,
-  surname?: Maybe<Scalars['String']>,
+  firstName: Scalars['String'],
+  surname: Scalars['String'],
   emailAddress: Scalars['String'],
   googleToken?: Maybe<Scalars['String']>,
 };
@@ -106,29 +121,35 @@ export type ResolversTypes = {
   Query: {},
   User: User,
   String: Scalars['String'],
-  Boolean: Scalars['Boolean'],
   Mutation: {},
   AuthInput: AuthInput,
   AuthResponse: AuthResponse,
+  Role: Role,
+  Boolean: Scalars['Boolean'],
 };
 
+export type IsAuthenticatedDirectiveResolver<Result, Parent, ContextType = any, Args = {  }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
 export type AuthResponseResolvers<ContextType = any, ParentType = ResolversTypes['AuthResponse']> = {
-  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
 };
 
 export type MutationResolvers<ContextType = any, ParentType = ResolversTypes['Mutation']> = {
   authenticate?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, MutationAuthenticateArgs>,
+  changeRole?: Resolver<ResolversTypes['User'], ParentType, ContextType, MutationChangeRoleArgs>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType = ResolversTypes['Query']> = {
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
-  isLoggedIn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  getAgents?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
+  getLeaders?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
+  getCoordinators?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
 };
 
 export type UserResolvers<ContextType = any, ParentType = ResolversTypes['User']> = {
-  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  surname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  surname?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   googleToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
@@ -146,3 +167,13 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
 */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
+export type DirectiveResolvers<ContextType = any> = {
+  isAuthenticated?: IsAuthenticatedDirectiveResolver<any, any, ContextType>,
+};
+
+
+/**
+* @deprecated
+* Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
+*/
+export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;

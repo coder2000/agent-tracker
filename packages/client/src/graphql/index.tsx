@@ -13,26 +13,39 @@ export type AuthInput = {
 };
 
 export type AuthResponse = {
-  token?: Maybe<Scalars["String"]>;
+  token: Scalars["String"];
   user: User;
 };
 
 export type Mutation = {
   authenticate: AuthResponse;
+  changeRole: User;
 };
 
 export type MutationAuthenticateArgs = {
   input: AuthInput;
 };
 
-export type Query = {
-  me: User;
-  isLoggedIn?: Maybe<Scalars["Boolean"]>;
+export type MutationChangeRoleArgs = {
+  role: Role;
 };
 
+export type Query = {
+  me: User;
+  getAgents: Array<Maybe<User>>;
+  getLeaders: Array<Maybe<User>>;
+  getCoordinators: Array<Maybe<User>>;
+};
+
+export enum Role {
+  Agent = "Agent",
+  Coodinator = "Coodinator",
+  Leader = "Leader"
+}
+
 export type User = {
-  firstName?: Maybe<Scalars["String"]>;
-  surname?: Maybe<Scalars["String"]>;
+  firstName: Scalars["String"];
+  surname: Scalars["String"];
   emailAddress: Scalars["String"];
   googleToken?: Maybe<Scalars["String"]>;
 };
