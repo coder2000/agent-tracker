@@ -9,11 +9,9 @@
     "emitDecoratorMetadata": true,
     "lib": ["es6", "esnext", "es2015"],
     "moduleResolution": "node",
-    "baseUrl": "./src/",
     "paths": {
-      "@entities/*": ["./entities/*"],
-      "@modules/*": ["./graphql/modules/*"],
-      "@types": ["./types"]
+      "@entities": ["./packages/server/src/entities/*"],
+      "@modules": ["./packages/server/src/modules/*"]
     }
   },
   "exclude": ["node_modules", "build", "config", "release"]

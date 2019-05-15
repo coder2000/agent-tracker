@@ -1,6 +1,6 @@
 import { Injectable, ProviderScope, Inject } from "@graphql-modules/di";
-import { User } from "../../../../entities/User";
-import { AuthResponse } from "../../../../types";
+import { User } from "@entities/User";
+import { AuthResponse } from "@types";
 import { JwtProvider } from "./jwt.provider";
 import {
   DatabasePoolType,

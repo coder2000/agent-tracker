@@ -22,7 +22,7 @@ app.use(cors());
 app.use(json());
 
 const { schema, context, subscriptions } = AppModule.forRoot({
-  connection: dbPool,
+  dbPool,
   app
 });
 
