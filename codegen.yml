@@ -1,8 +1,5 @@
 overwrite: true
 schema: ./packages/server/src/**/schema.graphql
-documents:
-  - packages/client/src/**/*.tsx
-  - packages/client/src/**/*.ts
 require:
   - ts-node/register/transpile-only
   - tsconfig-paths/register
@@ -12,6 +9,9 @@ generates:
       - typescript
       - typescript-resolvers
   packages/client/src/graphql/index.tsx:
+    documents:
+      - packages/client/src/**/*.tsx
+      - packages/client/src/**/*.ts
     plugins:
       - typescript
       - typescript-operations

@@ -2,9 +2,9 @@ directive @isAuthenticated on FIELD_DEFINITION
 
 type Query {
   me: User! @isAuthenticated
-  getAgents: [User]!
-  getLeaders: [User]!
-  getCoordinators: [User]!
+  getAgents: [User!]!
+  getLeaders: [User!]!
+  getCoordinators: [User!]!
 }
 
 type Mutation {

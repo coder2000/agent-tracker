@@ -32,9 +32,9 @@ export type MutationChangeRoleArgs = {
 
 export type Query = {
   me: User;
-  getAgents: Array<Maybe<User>>;
-  getLeaders: Array<Maybe<User>>;
-  getCoordinators: Array<Maybe<User>>;
+  getAgents: Array<User>;
+  getLeaders: Array<User>;
+  getCoordinators: Array<User>;
 };
 
 export enum Role {

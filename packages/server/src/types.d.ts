@@ -36,9 +36,9 @@ export type MutationChangeRoleArgs = {
 
 export type Query = {
   me: User,
-  getAgents: Array<Maybe<User>>,
-  getLeaders: Array<Maybe<User>>,
-  getCoordinators: Array<Maybe<User>>,
+  getAgents: Array<User>,
+  getLeaders: Array<User>,
+  getCoordinators: Array<User>,
 };
 
 export enum Role {
@@ -142,9 +142,9 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversTypes['Mu
 
 export type QueryResolvers<ContextType = any, ParentType = ResolversTypes['Query']> = {
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
-  getAgents?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
-  getLeaders?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
-  getCoordinators?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
+  getAgents?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>,
+  getLeaders?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>,
+  getCoordinators?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>,
 };
 
 export type UserResolvers<ContextType = any, ParentType = ResolversTypes['User']> = {
