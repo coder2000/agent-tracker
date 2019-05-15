@@ -1,0 +1,25 @@
+directive @isAuthenticated on FIELD_DEFINITION
+
+type Query {
+  me: User! @isAuthenticated
+  getAgents: [User]!
+  getLeaders: [User]!
+  getCoordinators: [User]!
+}
+
+type Mutation {
+  changeRole(role: Role!): User!
+}
+
+type User {
+  firstName: String!
+  surname: String!
+  emailAddress: String!
+  googleToken: String
+}
+
+enum Role {
+  Agent
+  Coodinator
+  Leader
+}

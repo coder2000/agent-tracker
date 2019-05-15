@@ -7,7 +7,7 @@
     "@panva/jose": "^1.0.2",
     "apollo-server-express": "^2.5.0",
     "babel-jest": "^24.8.0",
-    "babel-loader": "^8.0.5",
+    "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
@@ -24,7 +24,7 @@
     "helmet": "^3.18.0",
     "jest": "^24.8.0",
     "jsonwebtoken": "^8.5.1",
-    "lerna": "^3.13.4",
+    "lerna": "^3.14.0",
     "merge-graphql-schemas": "^1.5.8",
     "morgan": "~1.9.1",
     "reflect-metadata": "^0.1.13",
@@ -41,7 +41,7 @@
     "@types/helmet": "^0.0.43",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/morgan": "^1.7.35",
-    "@types/node": "^12.0.1",
+    "@types/node": "^12.0.2",
     "@types/oauth": "^0.9.1",
     "@types/passport": "^1.0.0",
     "@types/slonik": "^16.16.1",
@@ -66,8 +66,8 @@
   "private": true,
   "scripts": {
     "build": "node ./node_modules/.bin/webpack --config config/webpack.config.js",
-    "start": "node build/compiled",
-    "dev": "DEBUG=* ROARR_LOG=true nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql | roarr pretty-print",
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "start:watch": "DEBUG=* ROARR_LOG=true nodemon | roarr pretty-print",
     "generate": "gql-gen"
   },
   "version": "0.0.0"

@@ -3,7 +3,9 @@ schema: ./packages/server/src/schema.ts
 documents:
   - packages/client/src/**/*.tsx
   - packages/client/src/**/*.ts
-require: ts-node/register/transpile-only
+require:
+  - ts-node/register/transpile-only
+  - tsconfig-paths/register
 generates:
   packages/server/src/types.d.ts:
     plugins:

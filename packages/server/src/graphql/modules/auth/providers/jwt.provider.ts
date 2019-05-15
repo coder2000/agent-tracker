@@ -18,4 +18,10 @@ export class JwtProvider {
       expiresIn: "16h"
     });
   }
+
+  verifyToken(token: string): boolean {
+    const payload = JWT.verify(token, this.pubKey, { issuer: "bnb:server" });
+
+    return payload ? true : false;
+  }
 }

@@ -1,5 +1,7 @@
+directive @isAuthenticated on FIELD_DEFINITION
+
 type AuthResponse {
-  token: String
+  token: String!
   user: User!
 }
 
@@ -7,17 +9,6 @@ input AuthInput {
   accessToken: String!
 }
 
-type Query {
-  me: User!
-}
-
 type Mutation {
   authenticate(input: AuthInput!): AuthResponse!
-}
-
-type User {
-  firstName: String
-  surname: String
-  emailAddress: String!
-  googleToken: String
 }
