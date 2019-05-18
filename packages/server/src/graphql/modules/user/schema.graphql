@@ -16,6 +16,7 @@ type User {
   surname: String!
   emailAddress: String!
   googleToken: String
+  role: Role!
 }
 
 enum Role {

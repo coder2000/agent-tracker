@@ -52,6 +52,7 @@ export type User = {
   surname: Scalars['String'],
   emailAddress: Scalars['String'],
   googleToken?: Maybe<Scalars['String']>,
+  role: Role,
 };
 
 import { GraphQLResolveInfo } from 'graphql';
@@ -121,10 +122,10 @@ export type ResolversTypes = {
   Query: {},
   User: User,
   String: Scalars['String'],
+  Role: Role,
   Mutation: {},
   AuthInput: AuthInput,
   AuthResponse: AuthResponse,
-  Role: Role,
   Boolean: Scalars['Boolean'],
 };
 
@@ -152,6 +153,7 @@ export type UserResolvers<ContextType = any, ParentType = ResolversTypes['User']
   surname?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   googleToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {

@@ -48,6 +48,7 @@ export type User = {
   surname: Scalars["String"];
   emailAddress: Scalars["String"];
   googleToken?: Maybe<Scalars["String"]>;
+  role: Role;
 };
 export type AuthenticateMutationVariables = {
   input: AuthInput;
@@ -62,6 +63,6 @@ export type MeQueryVariables = {};
 export type MeQuery = { __typename?: "Query" } & {
   me: { __typename?: "User" } & Pick<
     User,
-    "firstName" | "surname" | "emailAddress"
+    "firstName" | "surname" | "emailAddress" | "role"
   >;
 };

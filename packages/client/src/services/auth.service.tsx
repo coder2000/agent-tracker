@@ -1,11 +1,18 @@
 import * as React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { Redirect } from "react-router-dom";
-import { User, MeQuery } from "../graphql";
+import { User, MeQuery, Role } from "../graphql";
 import gql from "graphql-tag";
 import { AUTH_TOKEN } from "../symbols";
 
-const AuthContext = React.createContext<User>({ emailAddress: "" });
+const user = {
+  firstName: "",
+  surname: "",
+  emailAddress: "",
+  role: Role.Agent
+};
+
+const AuthContext = React.createContext<User>(user);
 
 export const useMe = () => {
   return React.useContext(AuthContext);
@@ -19,6 +26,7 @@ export const withAuth = <P extends object>(Component: React.ComponentType<P>) =>
           firstName
           surname
           emailAddress
+          role
         }
       }
     `;
