@@ -5,8 +5,9 @@ import { Layout } from "./Layout";
 import { client } from "../client";
 import loadIcons from "../icons";
 import { Warning } from "./Warning";
+import { withAuth } from "../../services/auth.service";
 
-export default function App() {
+function App() {
   loadIcons();
 
   return (
@@ -21,3 +22,5 @@ export default function App() {
     </ApolloProvider>
   );
 }
+
+export default withAuth(App);

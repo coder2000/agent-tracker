@@ -1,6 +1,5 @@
 import { Injectable, ProviderScope, Inject } from "@graphql-modules/di";
-import { User } from "@entities/user";
-import { AuthResponse } from "@types";
+import { User, Role, AuthResponse } from "@types";
 import { JwtProvider } from "./jwt.provider";
 import {
   DatabasePoolType,
@@ -57,7 +56,7 @@ export class AuthProvider {
 
       this.currentUser = user;
 
-      const jwtToken = this.jwtProvider.getNewToken(user.emailAddress);
+      const jwtToken = this.jwtProvider.getNewToken(user);
 
       return { user, token: jwtToken };
     }
@@ -66,10 +65,12 @@ export class AuthProvider {
   }
 
   buildUser(row: QueryResultRowType): User {
-    const user = new User();
-    user.firstName = row["firstName"] as string;
-    user.surname = row["surname"] as string;
-    user.emailAddress = row["email"] as string;
+    const user = {
+      firstName: row["firstName"] as string,
+      surname: row["surname"] as string,
+      emailAddress: row["email"] as string,
+      role: row["role"] as Role
+    };
 
     return user;
   }

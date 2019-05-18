@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useQuery } from "react-apollo-hooks";
 import { Redirect } from "react-router-dom";
-import { User, MeQuery, Role } from "../graphql";
-import gql from "graphql-tag";
+import { User, Role } from "../graphql";
 import { AUTH_TOKEN } from "../symbols";
+import { JWK, JWT } from "@panva/jose";
+import * as fs from "fs";
 
 const user = {
   firstName: "",
@@ -20,42 +20,26 @@ export const useMe = () => {
 
 export const withAuth = <P extends object>(Component: React.ComponentType<P>) =>
   class WithAuth extends React.Component<P> {
-    ME = gql`
-      query ME {
-        me {
-          firstName
-          surname
-          emailAddress
-          role
-        }
-      }
-    `;
-
-    getAuthHeader = (): string | null => {
+    getAuthToken = (): string | null => {
       return localStorage.getItem(AUTH_TOKEN) || null;
     };
 
     render() {
-      if (!this.getAuthHeader()) {
+      const token = this.getAuthToken();
+
+      if (!token) {
         return <Redirect to="/" />;
       }
+
+      const key = JWK.importKey(fs.readFileSync("./pub.key"));
+      const payload = JWT.verify(token, key, { issuer: "bnb:server" });
 
       const { ...props } = this.props;
-      const result = useQuery<MeQuery>(this.ME);
-
-      if (result.error) {
-        return <Redirect to="/" />;
-      }
-
-      if (result == null || result.data == null) {
-        return <Redirect to="/" />;
-      } else {
-        return (
-          <AuthContext.Provider value={result.data.me}>
-            <Component {...props as P} />
-          </AuthContext.Provider>
-        );
-      }
+      return (
+        <AuthContext.Provider value={payload as User}>
+          <Component {...props as P} />
+        </AuthContext.Provider>
+      );
     }
   };
 

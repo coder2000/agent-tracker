@@ -1,5 +1,6 @@
 import { Injectable } from "@graphql-modules/di";
 import { JWK, JWT } from "@panva/jose";
+import { User } from "@types";
 import * as fs from "fs";
 
 @Injectable()
@@ -12,8 +13,8 @@ export class JwtProvider {
     this.privKey = JWK.importKey(fs.readFileSync("./priv.key"));
   }
 
-  getNewToken(email: string): string {
-    return JWT.sign({ "bnb:user:email": email }, this.privKey, {
+  getNewToken(user: User): string {
+    return JWT.sign({ "bnb:user": user }, this.privKey, {
       issuer: "bnb:server",
       expiresIn: "16h"
     });
