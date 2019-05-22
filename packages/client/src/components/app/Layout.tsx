@@ -48,7 +48,7 @@ export function Layout(props: Props) {
             placement={"bottom"}
             overlay={<Tooltip id="interactions-tooltip">Interactions</Tooltip>}
           >
-            <Nav.Link eventKey="interactions">
+            <Nav.Link eventKey="interactions" href="/interactions">
               <Icon icon="ticket-alt" />
             </Nav.Link>
           </OverlayTrigger>

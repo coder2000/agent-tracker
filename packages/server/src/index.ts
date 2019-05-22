@@ -34,6 +34,8 @@ const server = createServer(app);
 
 apollo.installSubscriptionHandlers(server);
 
-server.listen(process.env.PORT, () => {
-  console.log("Listening");
+const port = process.env.PORT;
+
+server.listen(port, () => {
+  console.log(`Listening on port: ${port}`);
 });

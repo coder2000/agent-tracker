@@ -9,7 +9,13 @@
       "type": "node",
       "request": "launch",
       "args": ["${workspaceRoot}/packages/server/src/index.ts"],
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register",
+        "-r",
+        "tsconfig-paths/register"
+      ],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}/packages/server/",
       "protocol": "inspector",

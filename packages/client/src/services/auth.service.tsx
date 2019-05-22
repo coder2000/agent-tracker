@@ -2,8 +2,8 @@ import * as React from "react";
 import { Redirect } from "react-router-dom";
 import { User, Role } from "../graphql";
 import { AUTH_TOKEN } from "../symbols";
-import { JWK, JWT } from "@panva/jose";
-import * as fs from "fs";
+import jwt from "jsonwebtoken";
+import jwkToPem from "jwk-to-pem";
 
 const user = {
   firstName: "",
@@ -31,8 +31,13 @@ export const withAuth = <P extends object>(Component: React.ComponentType<P>) =>
         return <Redirect to="/" />;
       }
 
-      const key = JWK.importKey(fs.readFileSync("./pub.key"));
-      const payload = JWT.verify(token, key, { issuer: "bnb:server" });
+      const key = jwkToPem({
+        kty: "RSA",
+        e: "AQAB",
+        n:
+          "oRBMrgYimAJDdzMqvDz-sR3CRdYbqh6cIgdqvoDzB-Z8rwv_bt7tjF6Xa9gkp8btVAAJ8o9H0CPik5zDuvzEfyH8spcMq39KMQGDIy0LR9vyJeMQAJJUM-1EXrwAwTXghwNuKckqKryW9iMBxUcU8AhFWYRE1soqSFHv_-j9Yl5kX_AxdSXMuLDo-BGSvTPOeOOgKSV0Dc04lcc__tfeW2kf-jt1GKWfHBFs9CJpcm3SAXHn0Z45atQDdjyGYp0Je5kSoNGlQQ2khTr52iH6Vj5mMkB_cDccZONdFyxthEzuLkUxlnGVy9IlEd_KHmvj4dj3Hq-ZctAJPsoYLTv8Kw"
+      });
+      const payload = jwt.verify(token, key, { issuer: "bnb:server" });
 
       const { ...props } = this.props;
       return (

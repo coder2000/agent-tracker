@@ -5,6 +5,7 @@ import { Layout } from "./Layout";
 import { client } from "../client";
 import loadIcons from "../icons";
 import { Warning } from "./Warning";
+import { Interactions } from "../interactions";
 import { withAuth } from "../../services/auth.service";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Router>
           <Switch>
             <Route path={"/"} component={Warning} />
+            <Route path={"/interactions"} component={withAuth(Interactions)} />
           </Switch>
         </Router>
       </Layout>
@@ -23,4 +25,4 @@ function App() {
   );
 }
 
-export default withAuth(App);
+export default App;
