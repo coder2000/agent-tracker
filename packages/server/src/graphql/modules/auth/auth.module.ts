@@ -5,7 +5,7 @@ import { isAuthenticated } from "./directives";
 import { UserModule } from "@modules/user/user.module";
 import resolvers from "./resolvers";
 import * as typeDefs from "./schema.graphql";
-import { DB_POOL } from "../app.symbols";
+import { DB_POOL } from "@symbols";
 
 export const AuthModule = new GraphQLModule<IAppModuleConfig>({
   name: "Auth",
@@ -17,8 +17,8 @@ export const AuthModule = new GraphQLModule<IAppModuleConfig>({
     AuthProvider,
     JwtProvider
   ],
+  imports: [UserModule],
   schemaDirectives: {
     isAuthenticated
-  },
-  imports: [UserModule]
+  }
 });

@@ -7,7 +7,7 @@ import {
   NotFoundError,
   QueryResultRowType
 } from "slonik";
-import { DB_POOL } from "../../app.symbols";
+import { DB_POOL } from "@symbols";
 import { OAuth2Client } from "google-auth-library";
 
 @Injectable({

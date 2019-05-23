@@ -6,7 +6,7 @@ import "graphql-import-node";
 import * as helmet from "helmet";
 import { createServer } from "http";
 import "reflect-metadata";
-import { AppModule } from "./graphql/modules/app.module";
+import { AppModule } from "@modules/app.module";
 require("dotenv").config();
 import { createPool } from "slonik";
 import { createQueryLoggingInterceptor } from "slonik-interceptor-query-logging";
@@ -22,11 +22,14 @@ app.use(cors());
 app.use(json());
 
 const { schema, context, subscriptions } = AppModule.forRoot({
-  dbPool,
-  app
+  dbPool
 });
 
-const apollo = new ApolloServer({ schema, context, subscriptions });
+const apollo = new ApolloServer({
+  schema,
+  context,
+  subscriptions
+});
 
 apollo.applyMiddleware({ app });
 

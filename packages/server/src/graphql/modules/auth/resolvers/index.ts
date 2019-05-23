@@ -1,9 +1,5 @@
 import { AuthProvider } from "../providers";
-import {
-  Resolvers,
-  AuthResponse,
-  MutationAuthenticateArgs
-} from "../../../../types";
+import { Resolvers, AuthResponse, MutationAuthenticateArgs } from "@types";
 import { ModuleContext } from "@graphql-modules/core";
 
 export default {

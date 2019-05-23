@@ -13,7 +13,8 @@
     "paths": {
       "@entities/*": ["./entities/*"],
       "@modules/*": ["./graphql/modules/*"],
-      "@types": ["./types"]
+      "@types": ["./types"],
+      "@symbols": ["./graphql/modules/app.symbols"]
     }
   },
   "exclude": ["node_modules", "build", "config", "release"]
