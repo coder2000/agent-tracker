@@ -28,7 +28,12 @@ const { schema, context, subscriptions } = AppModule.forRoot({
 const apollo = new ApolloServer({
   schema,
   context,
-  subscriptions
+  subscriptions,
+  introspection: true,
+  tracing: true,
+  engine: {
+    apiKey: process.env.ENGINE_API_KEY
+  }
 });
 
 apollo.applyMiddleware({ app });
