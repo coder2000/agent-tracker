@@ -1,4 +1,5 @@
 import { Injectable, ProviderScope, Inject } from "@graphql-modules/di";
+import { ModuleSessionInfo, OnRequest } from "@graphql-modules/core";
 import { User, Role, AuthResponse } from "@types";
 import { JwtProvider } from "./jwt.provider";
 import {
@@ -13,13 +14,19 @@ import { OAuth2Client } from "google-auth-library";
 @Injectable({
   scope: ProviderScope.Session
 })
-export class AuthProvider {
+export class AuthProvider implements OnRequest {
   currentUser: User;
 
   constructor(
     @Inject(DB_POOL) private pool: DatabasePoolType,
     private jwtProvider: JwtProvider
   ) {}
+
+  onRequest({ session }: ModuleSessionInfo) {
+    if ("req" in session) {
+      this.currentUser = session.req.user;
+    }
+  }
 
   async authenticate(token: string): Promise<AuthResponse | false> {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -50,6 +57,8 @@ export class AuthProvider {
 
               return this.buildUser(row);
             }
+
+            throw error;
           }
         }
       );

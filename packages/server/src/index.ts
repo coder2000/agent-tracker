@@ -17,8 +17,10 @@ const interceptors = [createQueryLoggingInterceptor()];
 
 const dbPool = createPool(process.env.PG_CONNECTION, { interceptors });
 
+const corsProtection = cors({ origin: "http://localhost" });
+
 app.use(helmet());
-app.use(cors());
+app.use(corsProtection);
 app.use(json());
 
 const { schema, context, subscriptions } = AppModule.forRoot({
@@ -30,10 +32,7 @@ const apollo = new ApolloServer({
   context,
   subscriptions,
   introspection: true,
-  tracing: true,
-  engine: {
-    apiKey: process.env.ENGINE_API_KEY
-  }
+  tracing: true
 });
 
 apollo.applyMiddleware({ app });
