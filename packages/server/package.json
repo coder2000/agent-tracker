@@ -14,7 +14,7 @@
     "csurf": "^1.10.0",
     "debug": "~4.1.1",
     "dotenv": "^8.0.0",
-    "enzyme-adapter-react-16": "^1.13.1",
+    "enzyme-adapter-react-16": "^1.15.5",
     "express": "~4.17.1",
     "fs": "^0.0.1-security",
     "google-auth-library": "^4.0.0",
