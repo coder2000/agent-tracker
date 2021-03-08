@@ -21,7 +21,7 @@
     "react-test-renderer": "^16.8.6"
   },
   "dependencies": {
-    "@graphql-codegen/cli": "^1.2.0",
+    "@graphql-codegen/cli": "^1.21.2",
     "@graphql-codegen/typescript": "^1.2.0",
     "@graphql-codegen/typescript-operations": "^1.2.0",
     "@graphql-codegen/typescript-react-apollo": "^1.2.0",
